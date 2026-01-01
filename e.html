@@ -1,768 +1,519 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sovereign Aerospace - NVIDIA Vertical Strategy V3</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
     <style>
-/* --- CORE AESTHETICS --- */
-:root {
-    --nv-green: #76B900;
-    --nv-bright-green: #9AFF00;
-    --nv-black: #000000;
-    --nv-dark: #0B0C10;
-    --nv-panel: rgba(20, 24, 30, 0.7);
-    --nv-border: rgba(118, 185, 0, 0.4);
-    --nv-blue: #00A3E0;
-    --nv-red: #E30613;
-    --nv-orange: #FF8200;
-    --text-main: #FFFFFF;
-    --text-muted: #A1A1AA;
-}
+      /* --- CORE AESTHETICS --- */
+      :root {
+        --nv-green: #76b900;
+        --nv-bright-green: #9aff00;
+        --nv-black: #000000;
+        --nv-dark: #0b0c10;
+        --nv-panel: rgba(20, 24, 30, 0.7);
+        --nv-border: rgba(118, 185, 0, 0.4);
+        --nv-blue: #00a3e0;
+        --nv-red: #e30613;
+        --nv-orange: #ff8200;
+        --text-main: #ffffff;
+        --text-muted: #a1a1aa;
+      }
 
-* { box-sizing: border-box; }
+      * {
+        box-sizing: border-box;
+      }
 
-body {
-    background-color: #050505;
-    background-image: 
-        radial-gradient(circle at 50% 50%, rgba(118, 185, 0, 0.03) 0%, transparent 60%),
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 100% 100%, 40px 40px, 40px 40px;
-    margin: 0;
-    padding: 0;
-    font-family: 'Inter', sans-serif;
-    color: var(--text-main);
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-}
+      body {
+        background-color: #050505;
+        background-image: radial-gradient(
+            circle at 50% 50%,
+            rgba(118, 185, 0, 0.03) 0%,
+            transparent 60%
+          ),
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 100% 100%, 40px 40px, 40px 40px;
+        margin: 0;
+        padding: 0;
+        font-family: "Inter", sans-serif;
+        color: var(--text-main);
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+      }
 
-/* --- SECTION CONTAINER HUD STYLE (Full Screen) --- */
-.slide-container {
-    position: relative;
-    width: 100%;
-    min-height: 100vh; /* Full viewport height */
-    padding: 80px 10%; /* Responsive padding */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    
-    /* Background & Borders */
-    background: radial-gradient(circle at top right, rgba(20, 25, 35, 1) 0%, rgba(5, 5, 8, 1) 100%);
-    border-bottom: 1px solid rgba(118, 185, 0, 0.2);
-    overflow: hidden;
-}
+      /* --- SECTION CONTAINER HUD STYLE --- */
+      .slide-container {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        padding: 80px 10%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: radial-gradient(
+          circle at top right,
+          rgba(20, 25, 35, 1) 0%,
+          rgba(5, 5, 8, 1) 100%
+        );
+        border-bottom: 1px solid rgba(118, 185, 0, 0.2);
+        overflow: hidden;
+      }
 
-/* Tech Decor Corners - Adjusted for full screen */
-.slide-container::before {
-    content: '';
-    position: absolute;
-    top: 40px; left: 40px; right: 40px; bottom: 40px;
-    border: 1px solid rgba(255,255,255,0.03);
-    pointer-events: none;
-    z-index: 1;
-}
+      .slide-container::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+              to right,
+              var(--nv-green) 2px,
+              transparent 2px
+            )
+            0 0,
+          linear-gradient(to bottom, var(--nv-green) 2px, transparent 2px) 0 0,
+          linear-gradient(to left, var(--nv-green) 2px, transparent 2px) 100% 0,
+          linear-gradient(to bottom, var(--nv-green) 2px, transparent 2px) 100%
+            0,
+          linear-gradient(to left, var(--nv-green) 2px, transparent 2px) 100%
+            100%,
+          linear-gradient(to top, var(--nv-green) 2px, transparent 2px) 100%
+            100%,
+          linear-gradient(to right, var(--nv-green) 2px, transparent 2px) 0 100%,
+          linear-gradient(to top, var(--nv-green) 2px, transparent 2px) 0 100%;
+        background-size: 30px 30px;
+        background-repeat: no-repeat;
+        opacity: 0.3;
+        pointer-events: none;
+        z-index: 2;
+      }
 
-.slide-container::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: 
-        linear-gradient(to right, var(--nv-green) 2px, transparent 2px) 0 0,
-        linear-gradient(to bottom, var(--nv-green) 2px, transparent 2px) 0 0,
-        linear-gradient(to left, var(--nv-green) 2px, transparent 2px) 100% 0,
-        linear-gradient(to bottom, var(--nv-green) 2px, transparent 2px) 100% 0,
-        linear-gradient(to left, var(--nv-green) 2px, transparent 2px) 100% 100%,
-        linear-gradient(to top, var(--nv-green) 2px, transparent 2px) 100% 100%,
-        linear-gradient(to right, var(--nv-green) 2px, transparent 2px) 0 100%,
-        linear-gradient(to top, var(--nv-green) 2px, transparent 2px) 0 100%;
-    background-size: 30px 30px; /* Slightly larger for full screen */
-    background-repeat: no-repeat;
-    opacity: 0.3;
-    pointer-events: none;
-    z-index: 2;
-}
+      /* --- ANIMATIONS --- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+      }
 
-/* --- SCROLL ANIMATION CLASSES --- */
-.reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
-}
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
 
-.reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-}
+      .delay-100 {
+        transition-delay: 0.1s;
+      }
+      .delay-200 {
+        transition-delay: 0.2s;
+      }
 
-/* Stagger delays */
-.delay-100 { transition-delay: 0.1s; }
-.delay-200 { transition-delay: 0.2s; }
-.delay-300 { transition-delay: 0.3s; }
-.delay-400 { transition-delay: 0.4s; }
+      /* --- TYPOGRAPHY --- */
+      h1,
+      h2,
+      h3 {
+        font-family: "Rajdhani", sans-serif;
+        text-transform: uppercase;
+        margin: 0;
+        letter-spacing: 2px;
+      }
 
-/* --- TYPOGRAPHY --- */
-h1, h2, h3, h4 {
-    font-family: 'Rajdhani', sans-serif;
-    text-transform: uppercase;
-    margin: 0;
-    letter-spacing: 2px;
-}
+      h1 {
+        font-size: 5vw;
+        font-weight: 700;
+        line-height: 0.9;
+        text-shadow: 0 0 20px rgba(118, 185, 0, 0.4);
+      }
+      h2 {
+        font-size: 3rem;
+        color: var(--nv-bright-green);
+        margin-bottom: 40px;
+        border-bottom: 2px solid rgba(118, 185, 0, 0.3);
+        padding-bottom: 10px;
+        display: inline-block;
+      }
+      h3 {
+        font-size: 1.5rem;
+        color: var(--nv-green);
+        margin-bottom: 10px;
+      }
+      p {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+      }
 
-h1 { font-size: 5vw; font-weight: 700; line-height: 0.9; text-shadow: 0 0 20px rgba(118, 185, 0, 0.4); } /* Responsive font size */
-h2 { font-size: 3rem; color: var(--nv-bright-green); margin-bottom: 40px; border-bottom: 2px solid rgba(118, 185, 0, 0.3); padding-bottom: 10px; display: inline-block; }
-h3 { font-size: 1.5rem; color: var(--nv-green); margin-bottom: 10px; font-weight: 600; }
-p { font-size: 1.1rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 15px; max-width: 800px; }
+      /* --- COMPONENTS --- */
+      .content-area {
+        position: relative;
+        z-index: 10;
+        width: 100%;
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 30px;
+        border-radius: 4px;
+      }
+      .row {
+        display: flex;
+        gap: 60px;
+        flex-wrap: wrap;
+      }
+      .col {
+        flex: 1;
+        min-width: 300px;
+      }
 
-/* --- COMPONENTS --- */
-.content-area { display: flex; flex-direction: column; width: 100%; z-index: 10; position: relative; }
-.row { display: flex; gap: 60px; align-items: center; width: 100%; flex-wrap: wrap; }
-.col { flex: 1; display: flex; flex-direction: column; justify-content: center; min-width: 300px; }
+      .tech-image {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 4px;
+        border: 1px solid rgba(118, 185, 0, 0.3);
+        background-color: #111;
+      }
 
-/* Glass Cards */
-.card {
-    background: rgba(255, 255, 255, 0.02);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 30px;
-    border-radius: 4px;
-    position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 100%;
-}
-.card:hover { 
-    border-color: var(--nv-green); 
-    box-shadow: 0 0 25px rgba(118, 185, 0, 0.15); 
-    transform: translateY(-5px);
-}
-.card-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
-.card-icon { font-size: 24px; color: var(--nv-green); }
+      .image-wrapper {
+        position: relative;
+        overflow: hidden;
+        border-radius: 4px;
+      }
 
-/* Glowing Borders */
-.glow-border-green { border-left: 3px solid var(--nv-green); }
-.glow-border-blue { border-left: 3px solid var(--nv-blue); }
-.glow-border-red { border-left: 3px solid var(--nv-red); }
-.glow-border-orange { border-left: 3px solid var(--nv-orange); }
+      .scan-line {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--nv-bright-green);
+        box-shadow: 0 0 10px var(--nv-bright-green);
+        animation: scan 3s linear infinite;
+        opacity: 0.5;
+      }
+      @keyframes scan {
+        0% {
+          top: 0;
+        }
+        100% {
+          top: 100%;
+        }
+      }
 
-/* Images */
-.tech-image {
-    width: 100%;
-    height: 400px; /* Fixed height for consistency in rows */
-    object-fit: cover;
-    border-radius: 4px;
-    border: 1px solid rgba(118, 185, 0, 0.3);
-    position: relative;
-}
+      .metric-box {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        background: linear-gradient(
+          90deg,
+          rgba(118, 185, 0, 0.1) 0%,
+          transparent 100%
+        );
+        padding: 15px;
+        border-left: 4px solid var(--nv-green);
+        margin-top: 20px;
+      }
+      .metric-val {
+        font-family: "Rajdhani";
+        font-size: 36px;
+        color: var(--nv-bright-green);
+        font-weight: 700;
+      }
 
-.image-wrapper {
-    position: relative;
-    overflow: hidden;
-    border-radius: 4px;
-    width: 100%;
-    box-shadow: 0 0 30px rgba(0,0,0,0.5);
-}
-.image-wrapper::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,20,0,0.6) 100%);
-    pointer-events: none;
-}
-.scan-line {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 2px;
-    background: rgba(118, 185, 0, 0.8);
-    box-shadow: 0 0 10px var(--nv-bright-green);
-    animation: scan 3s linear infinite;
-    z-index: 5;
-    opacity: 0.5;
-}
-@keyframes scan { 0% { top: 0; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+      /* Timeline */
+      .timeline-container {
+        position: relative;
+        padding: 60px 0;
+        width: 100%;
+      }
+      .timeline-track {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .timeline-active {
+        position: absolute;
+        top: 50%;
+        height: 2px;
+        background: var(--nv-green);
+        box-shadow: 0 0 10px var(--nv-green);
+      }
+      .timeline-point {
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 16px;
+        height: 16px;
+        background: var(--nv-green);
+        border-radius: 50%;
+      }
+      .timeline-label {
+        position: absolute;
+        top: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-weight: 700;
+        color: var(--nv-bright-green);
+      }
+      .timeline-desc {
+        position: absolute;
+        top: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        width: 150px;
+        font-size: 14px;
+      }
 
-/* Metrics */
-.metric-box {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    background: linear-gradient(90deg, rgba(118, 185, 0, 0.1) 0%, transparent 100%);
-    padding: 15px;
-    border-left: 4px solid var(--nv-green);
-    margin-top: 20px;
-}
-.metric-val { font-family: 'Rajdhani'; font-size: 36px; font-weight: 700; color: var(--nv-bright-green); line-height: 1; }
-.metric-label { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: #fff; }
+      .glitch {
+        position: relative;
+        display: inline-block;
+      }
 
-/* Charts */
-.chart-container { width: 100%; height: 300px; position: relative; }
-svg text { font-family: 'Rajdhani'; fill: var(--text-muted); font-size: 12px; }
+      .code-block {
+        background: #0d1117;
+        border: 1px solid #30363d;
+        padding: 20px;
+        font-family: monospace;
+        color: #e6edf3;
+        margin-top: 15px;
+      }
 
-/* Timeline */
-.timeline-container { position: relative; padding: 40px 0; width: 100%; margin-top: 50px; }
-.timeline-track { position: absolute; top: 50%; width: 100%; height: 2px; background: rgba(255,255,255,0.1); transform: translateY(-50%); }
-.timeline-active { position: absolute; top: 50%; width: 100%; height: 2px; background: var(--nv-green); transform: translateY(-50%); box-shadow: 0 0 10px var(--nv-green); }
-.timeline-point { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 16px; height: 16px; background: #000; border: 2px solid var(--nv-green); border-radius: 50%; z-index: 2; transition: all 0.3s; }
-.timeline-point:hover { transform: translate(-50%, -50%) scale(1.5); box-shadow: 0 0 20px var(--nv-green); }
-.timeline-point.filled { background: var(--nv-green); box-shadow: 0 0 15px var(--nv-green); }
-.timeline-label { position: absolute; top: -50px; left: 50%; transform: translateX(-50%); color: var(--nv-bright-green); font-family: 'Rajdhani'; font-weight: 700; font-size: 24px; white-space: nowrap; }
-.timeline-desc { position: absolute; top: 30px; left: 50%; transform: translateX(-50%); text-align: center; width: 180px; font-size: 14px; color: #ccc; }
+      .tech-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      .tech-table td {
+        padding: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
 
-/* Venn Diagram */
-.venn-container { position: relative; width: 400px; height: 350px; margin: 0 auto; }
-.venn-circle {
-    position: absolute;
-    width: 200px; height: 200px;
-    border-radius: 50%;
-    mix-blend-mode: screen;
-    display: flex; align-items: center; justify-content: center;
-    border: 2px solid;
-    background: radial-gradient(circle, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%);
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
-    transition: all 0.5s;
-}
-.venn-text { color: #fff; font-family: 'Rajdhani'; font-weight: 700; text-transform: uppercase; text-shadow: 0 2px 4px #000; z-index: 10; text-align: center; }
-
-/* Code Block */
-.code-block {
-    background: #0d1117;
-    border: 1px solid #30363d;
-    border-radius: 6px;
-    padding: 20px;
-    font-family: 'Courier New', monospace;
-    font-size: 14px;
-    color: #e6edf3;
-    position: relative;
-    overflow: hidden;
-}
-.code-block::before { content: 'PHYSICS_KERNEL::CUDA'; position: absolute; top: 5px; right: 10px; font-size: 10px; color: #555; }
-
-/* Table */
-.tech-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-.tech-table th { text-align: left; padding: 15px; border-bottom: 2px solid var(--nv-green); color: var(--nv-bright-green); font-family: 'Rajdhani'; font-size: 18px; }
-.tech-table td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); color: #ddd; }
-.tech-table tr:hover td { background: rgba(118, 185, 0, 0.05); }
-
-/* Glitch Effect Text */
-.glitch { position: relative; color: white; display: inline-block; }
-.glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; }
-.glitch::before { left: 2px; text-shadow: -1px 0 red; clip: rect(44px, 450px, 56px, 0); animation: glitch-anim 5s infinite linear alternate-reverse; }
-.glitch::after { left: -2px; text-shadow: -1px 0 blue; clip: rect(44px, 450px, 56px, 0); animation: glitch-anim2 5s infinite linear alternate-reverse; }
-@keyframes glitch-anim { 0% { clip: rect(31px, 9999px, 94px, 0); } 20% { clip: rect(6px, 9999px, 86px, 0); } 40% { clip: rect(78px, 9999px, 14px, 0); } 60% { clip: rect(3px, 9999px, 5px, 0); } 80% { clip: rect(35px, 9999px, 83px, 0); } 100% { clip: rect(66px, 9999px, 20px, 0); } }
-@keyframes glitch-anim2 { 0% { clip: rect(25px, 9999px, 78px, 0); } 20% { clip: rect(89px, 9999px, 16px, 0); } 40% { clip: rect(3px, 9999px, 34px, 0); } 60% { clip: rect(67px, 9999px, 7px, 0); } 80% { clip: rect(21px, 9999px, 96px, 0); } 100% { clip: rect(4px, 9999px, 63px, 0); } }
-
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateX(-50%) translateY(0);
+        }
+        50% {
+          transform: translateX(-50%) translateY(-10px);
+        }
+      }
     </style>
-</head>
-<body>
-
-<!-- SECTION 1: TITLE -->
-<div class="slide-container" style="justify-content: center; background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1920') center/cover no-repeat; background-attachment: fixed;">
-    <div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 100%);"></div>
-    <div class="content-area reveal active" style="justify-content: center; padding-left: 0;">
-        <div style="border-left: 8px solid var(--nv-green); padding-left: 40px; max-width: 1200px;">
-            <h4 style="color: var(--nv-green); margin-bottom: 10px;">CONFIDENTIAL // STRATEGY DECK</h4>
-            <h1 class="glitch" data-text="SOVEREIGN">SOVEREIGN</h1><br>
-            <h1 class="glitch" data-text="AEROSPACE" style="color: transparent; -webkit-text-stroke: 2px white;">AEROSPACE</h1>
-            <p style="font-size: 24px; max-width: 600px; margin-top: 30px; color: #ddd;">Industrializing Physics-ML for National Security & Global Aviation.</p>
+  </head>
+  <body>
+    <div
+      class="slide-container"
+      style="
+        background: url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=2072&auto=format&fit=crop')
+          center/cover no-repeat;
+        background-attachment: fixed;
+      "
+    >
+      <div
+        style="
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.9) 0%,
+            rgba(0, 0, 0, 0.4) 100%
+          );
+        "
+      ></div>
+      <div class="content-area reveal active" style="padding-left: 20px">
+        <div style="border-left: 8px solid var(--nv-green); padding-left: 40px">
+          <h4 style="color: var(--nv-green); margin-bottom: 10px">
+            CONFIDENTIAL // STRATEGY
+          </h4>
+          <h1 class="glitch" data-text="SOVEREIGN">SOVEREIGN</h1>
+          <br />
+          <h1 style="color: transparent; -webkit-text-stroke: 2px white">
+            AEROSPACE
+          </h1>
+          <p style="font-size: 24px; margin-top: 30px; color: #ddd">
+            Industrializing Physics-ML for National Security.
+          </p>
         </div>
-        <div style="margin-top: 80px; display: flex; gap: 60px;">
-            <div>
-                <div style="font-size: 14px; color: var(--nv-green); text-transform: uppercase; letter-spacing: 1px;">Presenter</div>
-                <div style="font-size: 20px; font-weight: 600;">[Your Name]</div>
-            </div>
-            <div>
-                <div style="font-size: 14px; color: var(--nv-green); text-transform: uppercase; letter-spacing: 1px;">Role</div>
-                <div style="font-size: 20px; font-weight: 600;">VP/GM, Sovereign Aerospace</div>
-            </div>
-            <div>
-                <div style="font-size: 14px; color: var(--nv-green); text-transform: uppercase; letter-spacing: 1px;">Clearance</div>
-                <div style="font-size: 20px; font-weight: 600;">NVIDIA INTERNAL</div>
-            </div>
+      </div>
+      <div
+        style="
+          position: absolute;
+          bottom: 40px;
+          left: 50%;
+          transform: translateX(-50%);
+          color: var(--nv-green);
+          animation: bounce 2s infinite;
+          text-align: center;
+        "
+      >
+        <div style="font-size: 12px; letter-spacing: 2px">
+          SCROLL TO INITIALIZE
         </div>
+        <i class="fa-solid fa-chevron-down" style="margin-top: 10px"></i>
+      </div>
     </div>
-    
-    <!-- Scroll indicator -->
-    <div style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); text-align: center; color: var(--nv-green); animation: bounce 2s infinite;">
-        <div style="font-size: 12px; letter-spacing: 2px;">SCROLL TO INITIALIZE</div>
-        <i class="fa-solid fa-chevron-down" style="margin-top: 10px;"></i>
-    </div>
-    <style>@keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);} 40% {transform: translateX(-50%) translateY(-10px);} 60% {transform: translateX(-50%) translateY(-5px);} }</style>
-</div>
 
-<!-- SECTION 2: EXEC SUMMARY (HUD QUAD) -->
-<div class="slide-container">
-    <h2 class="reveal">Mission Control</h2>
-    <div class="content-area" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px;">
-        <!-- Top Left -->
-        <div class="card glow-border-green reveal delay-100" style="background: radial-gradient(circle at top left, rgba(118,185,0,0.05), transparent);">
-            <div class="card-header">
-                <i class="fa-solid fa-crosshairs card-icon"></i>
-                <h3>Market Opportunity</h3>
-            </div>
-            <p><strong style="color:white;">Trigger:</strong> Azure Anomaly Detection Exit (Oct 2026).</p>
-            <p><strong style="color:white;">Threat:</strong> AWS & Google GraphCast encroaching on DoD.</p>
-            <div style="margin-top: 15px; font-size: 12px; color: var(--nv-bright-green); border: 1px solid var(--nv-green); display: inline-block; padding: 4px 8px;">STATUS: CRITICAL VACUUM</div>
+    <div class="slide-container">
+      <h2 class="reveal">Mission Control</h2>
+      <div class="content-area row">
+        <div
+          class="col card reveal delay-100"
+          style="border-left: 4px solid var(--nv-green)"
+        >
+          <h3>Market Opportunity</h3>
+          <p>
+            <strong>Trigger:</strong> Azure Anomaly Detection Exit (Oct 2026).
+          </p>
+          <p>
+            <strong>Threat:</strong> Competitor encroachment on DoD workloads.
+          </p>
         </div>
-        <!-- Top Right -->
-        <div class="card glow-border-blue reveal delay-200">
-            <div class="card-header">
-                <i class="fa-solid fa-layer-group card-icon" style="color: var(--nv-blue);"></i>
-                <h3 style="color: var(--nv-blue);">Execution Portfolio</h3>
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <div style="background: rgba(227,6,19,0.2); padding: 10px; text-align: center; border-radius: 4px; font-size: 14px; font-weight: bold;">Weather (Red)</div>
-                <div style="background: rgba(0,163,224,0.2); padding: 10px; text-align: center; border-radius: 4px; font-size: 14px; font-weight: bold;">Satellites (Blue)</div>
-                <div style="background: rgba(118,185,0,0.2); padding: 10px; text-align: center; border-radius: 4px; font-size: 14px; font-weight: bold;">FAA (Green)</div>
-                <div style="background: rgba(255,130,0,0.2); padding: 10px; text-align: center; border-radius: 4px; font-size: 14px; font-weight: bold;">Aircraft (Orange)</div>
-            </div>
+        <div
+          class="col card reveal delay-200"
+          style="border-left: 4px solid var(--nv-blue)"
+        >
+          <h3>Execution Portfolio</h3>
+          <p>
+            Immediate focus on Weather, Satellites, FAA, and Aircraft Health
+            Monitoring.
+          </p>
         </div>
-        <!-- Bottom Left -->
-        <div class="card glow-border-orange reveal delay-300">
-            <div class="card-header">
-                <i class="fa-solid fa-chart-line card-icon" style="color: var(--nv-orange);"></i>
-                <h3 style="color: var(--nv-orange);">Market Potential</h3>
-            </div>
-            <div class="metric-box" style="margin-top: 5px; border-left-color: var(--nv-orange); background: linear-gradient(90deg, rgba(255,130,0,0.1), transparent);">
-                <div class="metric-val" style="color: var(--nv-orange);">$140B</div>
-                <div class="metric-label">Conservative<br>TAM (2030)</div>
-            </div>
-        </div>
-        <!-- Bottom Right -->
-        <div class="card reveal delay-400" style="border: 1px dashed #555;">
-            <div class="card-header">
-                <i class="fa-solid fa-user-astronaut card-icon" style="color: #fff;"></i>
-                <h3 style="color: #fff;">Leadership</h3>
-            </div>
-            <p><strong>Objective:</strong> Stand up Vertical to execute 4 shovel-ready projects immediately.</p>
-            <p><strong>Ownership:</strong> Full P&L (Dev &rarr; Exec &rarr; Sustainment).</p>
-        </div>
+      </div>
     </div>
-</div>
 
-<!-- SECTION 3: CONOPS (VISUAL DIAGRAM) -->
-<div class="slide-container">
-    <h2 class="reveal">CONOPS: System of Systems</h2>
-    <div class="content-area row">
-        <div class="col reveal" style="flex: 0 0 40%;">
-            <div class="card" style="height: auto; display: flex; flex-direction: column; justify-content: center;">
-                <h3>Sovereign Intelligence Core</h3>
-                <p>We aren't selling apps. We are selling the <strong>Operating System</strong> for Sovereign Airspace.</p>
-                <div style="margin-top: 30px;">
-                    <div style="display: flex; align-items: center; margin-bottom: 25px;">
-                        <i class="fa-solid fa-right-to-bracket" style="color: var(--nv-green); width: 30px; font-size: 20px;"></i>
-                        <div>
-                            <div style="color: var(--nv-bright-green); font-size: 16px; font-weight: bold;">INPUT ($)</div>
-                            <div style="font-size: 14px; color: #aaa;">Weather Data + Satellite Telemetry</div>
-                        </div>
-                    </div>
-                    <div style="display: flex; align-items: center;">
-                        <i class="fa-solid fa-right-from-bracket" style="color: var(--nv-green); width: 30px; font-size: 20px;"></i>
-                        <div>
-                            <div style="color: var(--nv-bright-green); font-size: 16px; font-weight: bold;">OUTPUT ($)</div>
-                            <div style="font-size: 14px; color: #aaa;">Maintenance Decisions + Flight Paths</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Visual Core -->
-        <div class="col reveal delay-200" style="position: relative; display: flex; justify-content: center; align-items: center; min-height: 500px;">
-            <!-- Center Core -->
-            <div style="width: 220px; height: 220px; border: 4px solid var(--nv-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #000; z-index: 10; box-shadow: 0 0 80px rgba(118,185,0,0.4);">
-                <div style="text-align: center;">
-                    <i class="fa-solid fa-microchip" style="font-size: 60px; color: var(--nv-bright-green); margin-bottom: 15px;"></i>
-                    <div style="font-family: 'Rajdhani'; font-weight: 700; color: #fff; font-size: 24px;">BLACKWELL</div>
-                </div>
-            </div>
-            <!-- Orbiting Nodes -->
-            <div style="position: absolute; width: 500px; height: 500px; border: 1px dashed rgba(255,255,255,0.2); border-radius: 50%; animation: spin 20s linear infinite;"></div>
-            <div style="position: absolute; top: 0; background: var(--nv-red); color: white; padding: 10px 20px; border-radius: 20px; font-size: 14px; font-weight: bold; box-shadow: 0 0 15px var(--nv-red);">WEATHER</div>
-            <div style="position: absolute; bottom: 0; background: var(--nv-orange); color: white; padding: 10px 20px; border-radius: 20px; font-size: 14px; font-weight: bold; box-shadow: 0 0 15px var(--nv-orange);">AIRCRAFT</div>
-            <div style="position: absolute; left: 0; background: var(--nv-blue); color: white; padding: 10px 20px; border-radius: 20px; font-size: 14px; font-weight: bold; box-shadow: 0 0 15px var(--nv-blue);">SPACE</div>
-            <div style="position: absolute; right: 0; background: var(--nv-green); color: white; padding: 10px 20px; border-radius: 20px; font-size: 14px; font-weight: bold; box-shadow: 0 0 15px var(--nv-green);">FAA</div>
-        </div>
-    </div>
-</div>
-<style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
-
-<!-- SECTION 4: PHYSICS GAP (CHART) -->
-<div class="slide-container">
-    <h2 class="reveal">The Physics Gap: Urgency</h2>
-    <div class="content-area row">
-        <div class="col reveal" style="flex: 2;">
-            <div class="card" style="padding: 0; background: rgba(0,0,0,0.3); height: 400px;">
-                <svg viewBox="0 0 600 300" style="width: 100%; height: 100%; padding: 20px;">
-                    <defs>
-                        <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" style="stop-color:rgba(118,185,0,0.2);stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:rgba(118,185,0,0);stop-opacity:0" />
-                        </linearGradient>
-                        <filter id="glow">
-                            <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
-                            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-                        </filter>
-                    </defs>
-                    <!-- Grid -->
-                    <line x1="50" y1="250" x2="550" y2="250" stroke="#333" stroke-width="2"/>
-                    <line x1="50" y1="50" x2="50" y2="250" stroke="#333" stroke-width="2"/>
-                    <!-- Legacy Line -->
-                    <path d="M 50 80 L 550 80" stroke="#666" stroke-width="2" stroke-dasharray="5,5"/>
-                    <text x="450" y="70" fill="#888" font-size="12">Legacy CPU Cost (Flat)</text>
-                    <!-- NVIDIA Line -->
-                    <path d="M 50 60 Q 200 70 300 220 L 550 240" stroke="var(--nv-bright-green)" stroke-width="4" fill="none" filter="url(#glow)"/>
-                    <!-- Area Under Curve -->
-                    <path d="M 50 60 Q 200 70 300 220 L 550 240 L 550 250 L 50 250 Z" fill="url(#grad1)"/>
-                    <!-- Intersection -->
-                    <circle cx="275" cy="180" r="8" fill="#fff" stroke="var(--nv-green)" stroke-width="2"/>
-                    <text x="290" y="180" fill="#fff" font-size="16" font-weight="bold">2025: Profitability Crossing</text>
-                </svg>
-            </div>
-        </div>
-        <div class="col reveal delay-200">
-            <div class="card glow-border-red">
-                <h3 style="color: var(--nv-red);">The $1.4B Vacuum</h3>
-                <p>Microsoft Azure exits Anomaly Detection in Oct 2026.</p>
-                <hr style="border-color: rgba(255,255,255,0.1); margin: 25px 0;">
-                <p style="font-size: 16px;"><strong>Competitor Weakness:</strong><br>They use statistical AI (guessing).<br>We use Physics-ML (solving).</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- SECTION 5: THE MOAT -->
-<div class="slide-container">
-    <h2 class="reveal">The Sovereign Moat</h2>
-    <div class="content-area row">
+    <div class="slide-container">
+      <h2 class="reveal">The Sovereign Moat</h2>
+      <div class="content-area row">
         <div class="col reveal">
-            <div class="card" style="height: 100%; background: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(118,185,0,0.1) 100%);">
-                <div style="font-size: 80px; color: rgba(255,255,255,0.05); position: absolute; top: 10px; right: 20px;"><i class="fa-solid fa-lock"></i></div>
-                <h3>The Anti-Cloud Thesis</h3>
-                <p style="margin-top: 20px;">NATO and Allied Nations cannot put classified targeting data on AWS/Azure public servers.</p>
-                <div style="margin-top: 40px;">
-                    <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 20px;">
-                        <i class="fa-solid fa-server" style="color: var(--nv-green); font-size: 20px;"></i>
-                        <span style="font-weight: 600; font-size: 18px;">Air-Gapped</span>
-                    </div>
-                    <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 20px;">
-                        <i class="fa-solid fa-building-shield" style="color: var(--nv-green); font-size: 20px;"></i>
-                        <span style="font-weight: 600; font-size: 18px;">On-Premise</span>
-                    </div>
-                    <div style="display: flex; gap: 15px; align-items: center;">
-                        <i class="fa-solid fa-flag" style="color: var(--nv-green); font-size: 20px;"></i>
-                        <span style="font-weight: 600; font-size: 18px;">Sovereign Control</span>
-                    </div>
-                </div>
+          <div class="card" style="height: 100%">
+            <h3>Anti-Cloud Thesis</h3>
+            <p>
+              Classified data cannot live on public servers. We provide the
+              Air-Gapped alternative.
+            </p>
+            <div style="margin-top: 30px">
+              <p>
+                <i
+                  class="fa-solid fa-server"
+                  style="color: var(--nv-green)"
+                ></i>
+                On-Premise AI
+              </p>
+              <p>
+                <i
+                  class="fa-solid fa-building-shield"
+                  style="color: var(--nv-green)"
+                ></i>
+                Sovereign Control
+              </p>
             </div>
+          </div>
         </div>
         <div class="col reveal delay-200">
-            <div class="image-wrapper">
-                <img src="https://images.unsplash.com/photo-1558494949-ef526b0042a0?auto=format&fit=crop&q=80&w=1000" alt="Secure Server Room" class="tech-image">
-                <div class="scan-line"></div>
-                <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.7); padding: 5px 10px; border-left: 3px solid var(--nv-green); font-size: 12px;">SECURE INFRASTRUCTURE // NV-AI</div>
-            </div>
-            <div class="metric-box">
-                <div class="metric-val">30-50%</div>
-                <div class="metric-label">Premium over<br>Commercial SaaS</div>
-            </div>
+          <div class="image-wrapper">
+            <img
+              src="https://images.unsplash.com/photo-1558494949-ef526b0042a0?q=80&w=2000&auto=format&fit=crop"
+              alt="Server Room"
+              class="tech-image"
+              loading="lazy"
+            />
+            <div class="scan-line"></div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
 
-<!-- SECTION 6: PEDIGREE -->
-<div class="slide-container">
-    <h2 class="reveal">Operational Pedigree</h2>
-    <div class="content-area">
+    <div class="slide-container">
+      <h2 class="reveal">Operational Pedigree</h2>
+      <div class="content-area">
         <div class="timeline-container reveal">
-            <div class="timeline-track"></div>
-            <div class="timeline-active" style="width: 100%;"></div>
-            
-            <!-- Point 1 -->
-            <div class="timeline-point filled" style="left: 10%;">
-                <div class="timeline-label">1998</div>
-                <div class="timeline-desc">Mission Ops Start<br>(NASA/NOAA)</div>
-            </div>
-            
-            <!-- Point 2 -->
-            <div class="timeline-point filled" style="left: 40%;">
-                <div class="timeline-label">2010</div>
-                <div class="timeline-desc">GOES-R Flight Ops<br>Leadership</div>
-            </div>
-            
-            <!-- Point 3 -->
-            <div class="timeline-point filled" style="left: 70%;">
-                <div class="timeline-label">2015</div>
-                <div class="timeline-desc">NASA CARA<br>Collision Avoidance</div>
-            </div>
-            
-            <!-- Point 4 -->
-            <div class="timeline-point filled" style="left: 100%; width: 24px; height: 24px; border-color: #fff; background: var(--nv-bright-green);">
-                <div class="timeline-label" style="color: #fff; font-size: 32px;">2025</div>
-                <div class="timeline-desc" style="color: var(--nv-bright-green); font-weight: bold; font-size: 16px;">Sovereign Aerospace<br>Vertical</div>
-            </div>
+          <div class="timeline-track"></div>
+          <div class="timeline-active" style="width: 100%"></div>
+          <div class="timeline-point" style="left: 10%">
+            <div class="timeline-label">1998</div>
+            <div class="timeline-desc">NASA Ops Start</div>
+          </div>
+          <div class="timeline-point" style="left: 40%">
+            <div class="timeline-label">2010</div>
+            <div class="timeline-desc">GOES-R Lead</div>
+          </div>
+          <div class="timeline-point" style="left: 70%">
+            <div class="timeline-label">2015</div>
+            <div class="timeline-desc">NASA CARA</div>
+          </div>
+          <div
+            class="timeline-point"
+            style="left: 100%; background: var(--nv-bright-green)"
+          >
+            <div class="timeline-label" style="color: white">2025</div>
+            <div class="timeline-desc">Sovereign Formation</div>
+          </div>
         </div>
-        
-        <div class="reveal delay-300" style="margin-top: 100px; text-align: center;">
-            <h1 style="font-size: 4vw; color: rgba(255,255,255,0.1); margin-bottom: 20px;">"ZERO FAILURE SYSTEMS"</h1>
-            <p style="margin: 0 auto; font-size: 1.5rem;">I am not pitching from a whiteboard. I have 26 years running the exact missions we are modernizing.</p>
-        </div>
+      </div>
     </div>
-</div>
 
-<!-- SECTION 7: TECHNICAL FEASIBILITY -->
-<div class="slide-container">
-    <h2 class="reveal">Technical Feasibility: TRL-9</h2>
-    <div class="content-area row">
-        <div class="col reveal">
-            <h3>The Math is Identical</h3>
-            <p>We aren't inventing new science. We are accelerating proven physics.</p>
-            
-            <div class="code-block" style="margin-top: 20px; border-left: 3px solid var(--nv-blue);">
-                <span style="color: #8b949e;">// ORBITAL MECHANICS (SPACE)</span><br>
-                <span style="color: var(--nv-blue);">struct</span> KeplerianElements {<br>
-                &nbsp;&nbsp;<span style="color: var(--nv-bright-green);">float64</span> semi_major_axis;<br>
-                &nbsp;&nbsp;<span style="color: var(--nv-bright-green);">float64</span> eccentricity;<br>
-                &nbsp;&nbsp;<span style="color: var(--nv-bright-green);">float64</span> inclination;<br>
-                };
-            </div>
-
-            <div class="code-block" style="margin-top: 10px; border-left: 3px solid var(--nv-orange);">
-                <span style="color: #8b949e;">// AERODYNAMICS (AIR)</span><br>
-                <span style="color: var(--nv-orange);">struct</span> DragEquation {<br>
-                &nbsp;&nbsp;<span style="color: var(--nv-bright-green);">float64</span> coefficient_drag;<br>
-                &nbsp;&nbsp;<span style="color: var(--nv-bright-green);">float64</span> fluid_density;<br>
-                &nbsp;&nbsp;<span style="color: var(--nv-bright-green);">float64</span> velocity_squared;<br>
-                };
-            </div>
-            
-            <div class="metric-box" style="margin-top: 25px;">
-                <div class="metric-val" style="font-size: 32px;">1,000+</div>
-                <div class="metric-label">Real Anomalies<br>Validated</div>
-            </div>
+    <div
+      class="slide-container"
+      style="
+        background: url('https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?q=80&w=2000&auto=format&fit=crop')
+          center/cover no-repeat;
+      "
+    >
+      <div
+        style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.85)"
+      ></div>
+      <div class="content-area reveal" style="max-width: 600px">
+        <h2 style="color: var(--nv-red); border-color: var(--nv-red)">
+          Weather & Climate
+        </h2>
+        <div class="card">
+          <h3>500x Acceleration</h3>
+          <p>
+            Replacing legacy CPU models with Physics-ML kernels running on
+            Blackwell B200.
+          </p>
+          <table class="tech-table">
+            <tr>
+              <td>Precision</td>
+              <td style="color: var(--nv-bright-green)">CorrDiff High-Res</td>
+            </tr>
+            <tr>
+              <td>Hardware</td>
+              <td style="color: var(--nv-bright-green)">NVIDIA Blackwell</td>
+            </tr>
+          </table>
         </div>
-        <div class="col reveal delay-200">
-            <div class="image-wrapper">
-                <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&q=80&w=1000" alt="Orbital Physics" class="tech-image">
-                <div style="position: absolute; top: 10px; right: 10px; color: var(--nv-bright-green); font-family: monospace; font-size: 12px; background: rgba(0,0,0,0.5); padding: 5px;">
-                    Sim_Speed: 500x<br>Physics_Engine: ACTIVE
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-</div>
 
-<!-- SECTION 8: WEATHER (RED) -->
-<div class="slide-container" style="position: relative;">
-    <div style="position: absolute; top: 0; right: 0; width: 50%; height: 100%; opacity: 0.6; z-index: 0;">
-         <img src="https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?auto=format&fit=crop&q=80&w=1000" style="width: 100%; height: 100%; object-fit: cover;">
-         <div style="position: absolute; inset: 0; background: linear-gradient(90deg, #0B0C10 0%, transparent 100%);"></div>
-    </div>
-    
-    <div class="content-area reveal" style="width: 50%;">
-        <h2 style="border-color: var(--nv-red); color: var(--nv-red);">Weather & Climate</h2>
-        <div class="card glow-border-red">
-            <h3>PhysicsNeMo + CorrDiff</h3>
-            <p>Problem: Legacy CPU models are too slow for hypersonic warfare.</p>
-            <div class="tech-table-wrapper">
-                <table class="tech-table">
-                    <tr>
-                        <td style="color: #fff;">Speed</td>
-                        <td style="color: var(--nv-bright-green); font-weight: bold;">500x Acceleration</td>
-                    </tr>
-                    <tr>
-                        <td style="color: #fff;">Efficiency</td>
-                        <td style="color: var(--nv-bright-green); font-weight: bold;">10,000x Better</td>
-                    </tr>
-                    <tr>
-                        <td style="color: #fff;">Hardware</td>
-                        <td style="color: var(--nv-bright-green);">Blackwell B200</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
+    <script>
+      // Simple reveal on scroll
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add("active");
+          });
+        },
+        { threshold: 0.1 }
+      );
 
-<!-- SECTION 9: SATELLITE (BLUE) -->
-<div class="slide-container">
-    <div class="content-area row">
-        <div class="col reveal">
-            <div class="image-wrapper">
-                <img src="https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?auto=format&fit=crop&q=80&w=1000" class="tech-image">
-                <div class="scan-line" style="background: var(--nv-blue); box-shadow: 0 0 10px var(--nv-blue);"></div>
-            </div>
-        </div>
-        <div class="col reveal delay-200">
-            <h2 style="border-color: var(--nv-blue); color: var(--nv-blue);">Satellite SOH</h2>
-            <div class="card glow-border-blue">
-                <h3>NV-Tesseract for Space</h3>
-                <p>Porting chip-fab anomaly detection to space telemetry. We watch 10,000 assets so humans don't have to.</p>
-                <div class="metric-box" style="border-left-color: var(--nv-blue); background: linear-gradient(90deg, rgba(0,163,224,0.1), transparent);">
-                    <div class="metric-val" style="color: var(--nv-blue);">&lt;10ms</div>
-                    <div class="metric-label">Latency<br>Per Frame</div>
-                </div>
-                <p style="margin-top: 20px; font-size: 14px; opacity: 0.8;"><em>Prevents failures like Intelsat 33e.</em></p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- SECTION 10: FAA OPS (GREEN) -->
-<div class="slide-container">
-    <h2 class="reveal" style="color: var(--nv-green);">FAA Ops & Trajectory</h2>
-    <div class="content-area row">
-        <div class="col reveal">
-             <div class="card glow-border-green">
-                <h3>The Complexity Wall</h3>
-                <p>Deterministic CPU tools crash when you add drones and space launches.</p>
-                <p><strong>Solution:</strong> cuOpt for Global Trajectory Optimization.</p>
-             </div>
-             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
-                 <div class="card" style="padding: 15px; text-align: center;">
-                     <div style="font-size: 32px; color: var(--nv-bright-green); font-weight: bold;">10,000+</div>
-                     <div style="font-size: 14px;">Trajectories</div>
-                 </div>
-                 <div class="card" style="padding: 15px; text-align: center;">
-                     <div style="font-size: 32px; color: var(--nv-bright-green); font-weight: bold;">&lt;1ms</div>
-                     <div style="font-size: 14px;">Update Rate</div>
-                 </div>
-             </div>
-        </div>
-        <div class="col reveal delay-200">
-            <div class="image-wrapper">
-                <img src="https://images.unsplash.com/photo-1478860409698-8707f313ee8b?auto=format&fit=crop&q=80&w=1000" class="tech-image">
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- SECTION 11: AIRCRAFT (ORANGE) -->
-<div class="slide-container" style="position: relative;">
-     <div style="position: absolute; top: 0; left: 0; width: 50%; height: 100%; opacity: 0.6; z-index: 0;">
-         <img src="https://images.unsplash.com/photo-1487887235947-a955ef187fcc?auto=format&fit=crop&q=80&w=1000" style="width: 100%; height: 100%; object-fit: cover;">
-         <div style="position: absolute; inset: 0; background: linear-gradient(270deg, #0B0C10 0%, transparent 100%);"></div>
-    </div>
-    <div class="content-area reveal" style="margin-left: 55%; width: 45%;">
-        <h2 style="border-color: var(--nv-orange); color: var(--nv-orange);">Aircraft Health</h2>
-        <div class="card glow-border-orange">
-            <h3>Digital Twin of the Engine</h3>
-            <p>Half the F-35 fleet is grounded. We use Modulus to predict failures weeks in advance.</p>
-            <div class="metric-box" style="border-left-color: var(--nv-orange); background: linear-gradient(90deg, rgba(255,130,0,0.1), transparent);">
-                <div class="metric-val" style="color: var(--nv-orange);">40%</div>
-                <div class="metric-label">Reduction in<br>AOG Costs</div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- SECTION 12: SYNERGIES (VENN) -->
-<div class="slide-container">
-    <h2 class="reveal">Strategic Synergies</h2>
-    <div class="content-area reveal" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-        <div class="venn-container">
-            <div class="venn-circle" style="top: 0; left: 100px; border-color: var(--nv-green); background: rgba(118,185,0,0.1);">
-                <div class="venn-text" style="margin-bottom: 80px;">Public Sector</div>
-            </div>
-            <div class="venn-circle" style="top: 150px; left: 0; border-color: var(--nv-blue); background: rgba(0,163,224,0.1);">
-                <div class="venn-text" style="margin-top: 80px; margin-right: 20px;">Earth-2</div>
-            </div>
-            <div class="venn-circle" style="top: 150px; right: 0; border-color: var(--nv-orange); background: rgba(255,130,0,0.1);">
-                <div class="venn-text" style="margin-top: 80px; margin-left: 20px;">Omniverse</div>
-            </div>
-            <!-- Center Intersection -->
-            <div style="position: absolute; top: 140px; left: 130px; width: 140px; height: 140px; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; font-weight: bold; text-shadow: 0 0 10px var(--nv-bright-green); z-index: 20;">
-                SOVEREIGN<br>AEROSPACE
-            </div>
-        </div>
-        <p style="text-align: center; max-width: 600px; margin-top: 40px; font-size: 1.5rem; font-style: italic;">"We drag the entire NVIDIA portfolio into the highest-security markets in the world."</p>
-    </div>
-</div>
-
-<!-- SECTION 13: SCHEDULE -->
-<div class="slide-container">
-    <h2 class="reveal">Integrated Master Schedule</h2>
-    <div class="content-area reveal">
-        <table class="tech-table">
-            <thead>
-                <tr>
-                    <th>PHASE</th>
-                    <th>ACTIVITY</th>
-                    <th>GOAL</th>
-                    <th>STATUS</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="color: var(--nv-bright-green); font-weight: bold;">YEAR 1</td>
-                    <td>Shadow Mode Pilots</td>
-                    <td>Run parallel to legacy systems; prove accuracy.</td>
-                    <td><span style="color: #000; background: var(--nv-bright-green); padding: 4px 8px; border-radius: 2px; font-size: 12px; font-weight: bold;">READY</span></td>
-                </tr>
-                <tr>
-                    <td style="color: #fff; opacity: 0.7;">YEAR 2</td>
-                    <td>Advisory Mode</td>
-                    <td>Human-in-the-loop operational testing.</td>
-                    <td><span style="border: 1px solid #555; padding: 4px 8px; border-radius: 2px; font-size: 12px;">PLANNING</span></td>
-                </tr>
-                <tr>
-                    <td style="color: #fff; opacity: 0.5;">YEAR 3+</td>
-                    <td>Production Control</td>
-                    <td>Active revenue generation & mission automation.</td>
-                    <td><span style="border: 1px solid #555; padding: 4px 8px; border-radius: 2px; font-size: 12px;">FUTURE</span></td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <div style="margin-top: 60px; display: flex; gap: 30px;">
-            <div class="card" style="flex: 1; padding: 20px; text-align: center; border: 1px solid #333;">
-                <div style="font-size: 14px; color: #888; margin-bottom: 5px;">ANCHOR TENANT</div>
-                <div style="color: #fff; font-weight: bold; font-size: 20px;">NOAA NESDIS</div>
-            </div>
-            <div class="card" style="flex: 1; padding: 20px; text-align: center; border: 1px solid #333;">
-                <div style="font-size: 14px; color: #888; margin-bottom: 5px;">ANCHOR TENANT</div>
-                <div style="color: #fff; font-weight: bold; font-size: 20px;">USAF 557th</div>
-            </div>
-            <div class="card" style="flex: 1; padding: 20px; text-align: center; border: 1px solid #333;">
-                <div style="font-size: 14px; color: #888; margin-bottom: 5px;">ANCHOR TENANT</div>
-                <div style="color: #fff; font-weight: bold; font-size: 20px;">DELTA AIRLINES</div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- SECTION 14: Q&A -->
-<div class="slide-container" style="justify-content: center; align-items: center; text-align: center; background: radial-gradient(circle at center, rgba(118,185,0,0.1) 0%, #0B0C10 70%); border-bottom: none;">
-    <div class="reveal">
-        <i class="fa-solid fa-comments" style="font-size: 100px; color: var(--nv-green); margin-bottom: 40px; text-shadow: 0 0 30px var(--nv-green);"></i>
-        <h1 style="font-size: 120px; line-height: 1;">Q&A</h1>
-        <p style="font-size: 32px; color: #fff; max-width: 800px; margin-top: 20px;">"Securing the future of Sovereign Airspace together."</p>
-    </div>
-</div>
-
-<script>
-    // Initialize Intersection Observer
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.15 // Trigger when 15% of element is visible
-    };
-
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-                observer.unobserve(entry.target); // Only animate once
-            }
-        });
-    }, observerOptions);
-
-    // Observe all elements with class 'reveal'
-    document.addEventListener('DOMContentLoaded', () => {
-        const revealElements = document.querySelectorAll('.reveal');
-        revealElements.forEach(el => observer.observe(el));
-    });
-</script>
-
-</body>
+      document
+        .querySelectorAll(".reveal")
+        .forEach((el) => observer.observe(el));
+    </script>
+  </body>
 </html>
