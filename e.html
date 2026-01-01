@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sovereign Aerospace - NVIDIA Vertical Strategy V3</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      /* --- CORE AESTHETICS --- */
+      :root {
+        --nv-green: #76b900;
+        --nv-bright-green: #9aff00;
+        --nv-black: #000000;
+        --nv-dark: #0b0c10;
+        --nv-blue: #00a3e0;
+        --nv-red: #e30613;
+        --nv-orange: #ff8200;
+        --text-main: #ffffff;
+        --text-muted: #a1a1aa;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: #050505;
+        font-family: "Inter", sans-serif;
+        color: var(--text-main);
+        line-height: 1.6;
+      }
+
+      /* --- HUD LAYOUT --- */
+      .slide-container {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        padding: 80px 10%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-bottom: 1px solid rgba(118, 185, 0, 0.2);
+        overflow: hidden;
+        background-size: cover;
+        background-position: center;
+      }
+
+      .content-area {
+        position: relative;
+        z-index: 10;
+        width: 100%;
+      }
+
+      /* --- TYPOGRAPHY --- */
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Rajdhani", sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+      h1 {
+        font-size: clamp(3rem, 8vw, 5.5rem);
+        font-weight: 700;
+        line-height: 0.9;
+        margin-bottom: 20px;
+      }
+      h2 {
+        font-size: 2.8rem;
+        color: var(--nv-bright-green);
+        margin-bottom: 30px;
+        border-bottom: 2px solid var(--nv-green);
+        display: inline-block;
+      }
+      h3 {
+        font-size: 1.6rem;
+        color: var(--nv-green);
+        margin-top: 10px;
+      }
+      p {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+        margin-bottom: 15px;
+        max-width: 850px;
+      }
+
+      /* --- GRID & CARDS --- */
+      .row {
+        display: flex;
+        gap: 40px;
+        flex-wrap: wrap;
+        align-items: flex-start;
+      }
+      .col {
+        flex: 1;
+        min-width: 350px;
+      }
+
+      .card {
+        background: rgba(15, 15, 20, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(118, 185, 0, 0.2);
+        padding: 25px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+      }
+
+      /* --- VENN DIAGRAM --- */
+      .venn-container {
+        position: relative;
+        width: 100%;
+        height: 450px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .circle {
+        position: absolute;
+        width: 240px;
+        height: 240px;
+        border-radius: 50%;
+        border: 2px solid;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-family: "Rajdhani";
+        font-weight: 700;
+        background: rgba(0, 0, 0, 0.5);
+        transition: 0.3s;
+      }
+      .c1 {
+        border-color: var(--nv-green);
+        transform: translateY(-70px);
+      }
+      .c2 {
+        border-color: var(--nv-blue);
+        transform: translateX(-70px) translateY(50px);
+      }
+      .c3 {
+        border-color: var(--nv-orange);
+        transform: translateX(70px) translateY(50px);
+      }
+      .center-label {
+        position: absolute;
+        z-index: 30;
+        color: var(--nv-bright-green);
+        background: #000;
+        padding: 8px 15px;
+        border: 1px solid var(--nv-green);
+        font-family: "Rajdhani";
+        font-weight: 800;
+      }
+
+      /* --- TIMELINE --- */
+      .timeline {
+        position: relative;
+        padding: 50px 0;
+        display: flex;
+        justify-content: space-between;
+      }
+      .t-item {
+        text-align: center;
+        position: relative;
+        flex: 1;
+      }
+      .t-year {
+        font-family: "Rajdhani";
+        font-size: 2rem;
+        color: var(--nv-bright-green);
+        font-weight: 700;
+      }
+      .t-desc {
+        font-size: 0.9rem;
+        color: #ccc;
+        padding: 0 10px;
+      }
+
+      /* --- CODE BLOCK --- */
+      .code-block {
+        background: #0d1117;
+        border: 1px solid #30363d;
+        padding: 15px;
+        font-family: "Courier New", monospace;
+        font-size: 13px;
+        color: #e6edf3;
+        margin-top: 15px;
+        border-left: 4px solid var(--nv-green);
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: 0.8s ease-out;
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body>
+    <section
+      class="slide-container"
+      style="
+        background-image: linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.95) 0%,
+            rgba(0, 0, 0, 0.5) 100%
+          ),
+          url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1920');
+      "
+    >
+      <div class="content-area reveal active">
+        <h4 style="color: var(--nv-green); margin-bottom: 10px">
+          CONFIDENTIAL // STRATEGY DECK
+        </h4>
+        <h1>
+          SOVEREIGN<br /><span
+            style="color: transparent; -webkit-text-stroke: 2px white"
+            >AEROSPACE</span
+          >
+        </h1>
+        <p style="font-size: 1.5rem; color: #ddd">
+          Industrializing Physics-ML for National Security & Global Aviation.
+        </p>
+        <div style="margin-top: 50px; display: flex; gap: 40px">
+          <div>
+            <small style="color: var(--nv-green)">ROLE</small><br />VP/GM,
+            Sovereign Aerospace
+          </div>
+          <div>
+            <small style="color: var(--nv-green)">CLEARANCE</small><br />NVIDIA
+            INTERNAL
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide-container">
+      <div class="content-area reveal">
+        <h2>Mission Control</h2>
+        <div class="row">
+          <div class="col card">
+            <h3>The $1.4B Vacuum</h3>
+            <p>
+              Azure exits Anomaly Detection in Oct 2026. This creates a critical
+              vacuum in DoD and FAA health monitoring systems.
+            </p>
+            <div
+              style="
+                color: var(--nv-red);
+                font-weight: bold;
+                border: 1px solid var(--nv-red);
+                padding: 5px;
+                display: inline-block;
+              "
+            >
+              STATUS: CRITICAL
+            </div>
+          </div>
+          <div class="col card">
+            <h3>Market Potential</h3>
+            <p>
+              Conservative TAM of $140B by 2030 across Sovereign Weather,
+              Aircraft Health, and Satellite Ops.
+            </p>
+            <div
+              style="
+                font-size: 2.5rem;
+                font-family: 'Rajdhani';
+                color: var(--nv-orange);
+              "
+            >
+              $140B
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide-container">
+      <div class="content-area reveal">
+        <h2>Strategic Synergies</h2>
+        <div class="row">
+          <div class="col">
+            <p>
+              "We aren't selling apps. We are selling the Operating System for
+              Sovereign Airspace."
+            </p>
+            <div class="card">
+              <p>
+                <strong>Earth-2:</strong> Physics-ML for Climate Resilience.
+              </p>
+              <p><strong>Omniverse:</strong> Digital Twins for Asset Health.</p>
+              <p>
+                <strong>Public Sector:</strong> Secure Air-Gapped
+                Infrastructure.
+              </p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="venn-container">
+              <div class="circle c1">PUBLIC SECTOR</div>
+              <div class="circle c2">EARTH-2</div>
+              <div class="circle c3">OMNIVERSE</div>
+              <div class="center-label">SOVEREIGN AEROSPACE</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide-container">
+      <div class="content-area reveal">
+        <h2>Operational Pedigree</h2>
+        <p>
+          I am not pitching from a whiteboard. I have 26 years running the exact
+          missions we are modernizing.
+        </p>
+        <div class="timeline">
+          <div class="t-item">
+            <div class="t-year">1998</div>
+            <div class="t-desc">NASA/NOAA Mission Ops Start</div>
+          </div>
+          <div class="t-item">
+            <div class="t-year">2010</div>
+            <div class="t-desc">GOES-R Flight Ops Leadership</div>
+          </div>
+          <div class="t-item">
+            <div class="t-year">2015</div>
+            <div class="t-desc">NASA CARA Collision Avoidance</div>
+          </div>
+          <div class="t-item">
+            <div class="t-year">2025</div>
+            <div
+              class="t-desc"
+              style="color: var(--nv-bright-green); font-weight: bold"
+            >
+              Sovereign Aerospace Launch
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="slide-container"
+      style="
+        background-image: linear-gradient(
+            rgba(0, 0, 0, 0.9),
+            rgba(0, 0, 0, 0.9)
+          ),
+          url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=2000');
+      "
+    >
+      <div class="content-area reveal">
+        <h2>Technical Feasibility: TRL-9</h2>
+        <div class="row">
+          <div class="col">
+            <p>
+              The math is identical across domains. We are accelerating proven
+              physics using CUDA kernels.
+            </p>
+            <div class="code-block">
+              // Physics-ML Kernel Acceleration<br />
+              struct DragEquation {<br />
+              &nbsp;&nbsp;float64 coefficient_drag;<br />
+              &nbsp;&nbsp;float64 fluid_density;<br />
+              &nbsp;&nbsp;float64 velocity_squared;<br />
+              };
+            </div>
+          </div>
+          <div class="col card">
+            <h3>Proven Performance</h3>
+            <p>Speed: 500x Acceleration vs Legacy CPU.</p>
+            <p>Efficiency: 10,000x Better for Hypersonic Models.</p>
+            <p>Hardware: NVIDIA Blackwell B200 Optimized.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add("active");
+          });
+        },
+        { threshold: 0.1 }
+      );
+      document
+        .querySelectorAll(".reveal")
+        .forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>
