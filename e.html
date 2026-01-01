@@ -21,6 +21,8 @@
         --nv-bright-green: #9aff00;
         --nv-black: #000000;
         --nv-dark: #0b0c10;
+        --nv-panel: rgba(20, 24, 30, 0.7);
+        --nv-border: rgba(118, 185, 0, 0.4);
         --nv-blue: #00a3e0;
         --nv-red: #e30613;
         --nv-orange: #ff8200;
@@ -30,18 +32,27 @@
 
       * {
         box-sizing: border-box;
-        margin: 0;
-        padding: 0;
       }
 
       body {
         background-color: #050505;
+        background-image: radial-gradient(
+            circle at 50% 50%,
+            rgba(118, 185, 0, 0.03) 0%,
+            transparent 60%
+          ),
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 100% 100%, 40px 40px, 40px 40px;
+        margin: 0;
+        padding: 0;
         font-family: "Inter", sans-serif;
         color: var(--text-main);
-        line-height: 1.6;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
       }
 
-      /* --- HUD LAYOUT --- */
+      /* --- SECTION CONTAINER HUD STYLE --- */
       .slide-container {
         position: relative;
         width: 100%;
@@ -50,463 +61,447 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        background: radial-gradient(
+          circle at top right,
+          rgba(20, 25, 35, 1) 0%,
+          rgba(5, 5, 8, 1) 100%
+        );
         border-bottom: 1px solid rgba(118, 185, 0, 0.2);
         overflow: hidden;
-        background-size: cover;
-        background-position: center;
       }
 
-      .content-area {
-        position: relative;
-        z-index: 10;
-        width: 100%;
-      }
-
-      /* --- TYPOGRAPHY --- */
-      h1,
-      h2,
-      h3,
-      h4 {
-        font-family: "Rajdhani", sans-serif;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-      }
-      h1 {
-        font-size: clamp(3rem, 8vw, 5.5rem);
-        font-weight: 700;
-        line-height: 0.9;
-        margin-bottom: 20px;
-      }
-      h2 {
-        font-size: 2.8rem;
-        color: var(--nv-bright-green);
-        margin-bottom: 30px;
-        border-bottom: 2px solid var(--nv-green);
-        display: inline-block;
-      }
-      h3 {
-        font-size: 1.6rem;
-        color: var(--nv-green);
-        margin-top: 10px;
-      }
-      p {
-        font-size: 1.1rem;
-        color: var(--text-muted);
-        margin-bottom: 15px;
-        max-width: 850px;
-      }
-
-      /* --- GRID & CARDS --- */
-      .row {
-        display: flex;
-        gap: 40px;
-        flex-wrap: wrap;
-        align-items: flex-start;
-      }
-      .col {
-        flex: 1;
-        min-width: 350px;
-      }
-
-      .card {
-        background: rgba(15, 15, 20, 0.7);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(118, 185, 0, 0.2);
-        padding: 25px;
-        border-radius: 4px;
-        margin-bottom: 20px;
-      }
-
-      /* --- VENN DIAGRAM --- */
-      .venn-container {
-        position: relative;
-        width: 100%;
-        height: 450px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .circle {
+      .slide-container::after {
+        content: "";
         position: absolute;
-        width: 240px;
-        height: 240px;
-        border-radius: 50%;
-        border: 2px solid;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        font-family: "Rajdhani";
-        font-weight: 700;
-        background: rgba(0, 0, 0, 0.5);
-        mix-blend-mode: screen;
-      }
-      .c1 {
-        border-color: var(--nv-green);
-        transform: translateY(-70px);
-      }
-      .c2 {
-        border-color: var(--nv-blue);
-        transform: translateX(-70px) translateY(50px);
-      }
-      .c3 {
-        border-color: var(--nv-orange);
-        transform: translateX(70px) translateY(50px);
-      }
-      .center-label {
-        position: absolute;
-        z-index: 30;
-        color: var(--nv-bright-green);
-        background: #000;
-        padding: 8px 15px;
-        border: 1px solid var(--nv-green);
-        font-family: "Rajdhani";
-        font-weight: 800;
-        box-shadow: 0 0 20px var(--nv-green);
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+              to right,
+              var(--nv-green) 2px,
+              transparent 2px
+            )
+            0 0,
+          linear-gradient(to bottom, var(--nv-green) 2px, transparent 2px) 0 0,
+          linear-gradient(to left, var(--nv-green) 2px, transparent 2px) 100% 0,
+          linear-gradient(to bottom, var(--nv-green) 2px, transparent 2px) 100%
+            0,
+          linear-gradient(to left, var(--nv-green) 2px, transparent 2px) 100%
+            100%,
+          linear-gradient(to top, var(--nv-green) 2px, transparent 2px) 100%
+            100%,
+          linear-gradient(to right, var(--nv-green) 2px, transparent 2px) 0 100%,
+          linear-gradient(to top, var(--nv-green) 2px, transparent 2px) 0 100%;
+        background-size: 30px 30px;
+        background-repeat: no-repeat;
+        opacity: 0.3;
+        pointer-events: none;
+        z-index: 2;
       }
 
-      /* --- TIMELINE --- */
-      .timeline {
-        position: relative;
-        padding: 50px 0;
-        display: flex;
-        justify-content: space-between;
-        gap: 20px;
-      }
-      .t-item {
-        text-align: center;
-        position: relative;
-        flex: 1;
-      }
-      .t-year {
-        font-family: "Rajdhani";
-        font-size: 2rem;
-        color: var(--nv-bright-green);
-        font-weight: 700;
-      }
-      .t-desc {
-        font-size: 0.9rem;
-        color: #ccc;
-      }
-
-      /* --- CODE BLOCK --- */
-      .code-block {
-        background: #0d1117;
-        border: 1px solid #30363d;
-        padding: 15px;
-        font-family: "Courier New", monospace;
-        font-size: 13px;
-        color: #e6edf3;
-        margin-top: 15px;
-        border-left: 4px solid var(--nv-green);
-      }
-
+      /* --- ANIMATIONS --- */
       .reveal {
         opacity: 0;
-        transform: translateY(30px);
-        transition: 0.8s ease-out;
+        transform: translateY(40px);
+        transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
       }
+
       .reveal.active {
         opacity: 1;
         transform: translateY(0);
       }
 
+      .delay-100 {
+        transition-delay: 0.1s;
+      }
+      .delay-200 {
+        transition-delay: 0.2s;
+      }
+
+      /* --- TYPOGRAPHY --- */
+      h1,
+      h2,
+      h3 {
+        font-family: "Rajdhani", sans-serif;
+        text-transform: uppercase;
+        margin: 0;
+        letter-spacing: 2px;
+      }
+
+      h1 {
+        font-size: 5vw;
+        font-weight: 700;
+        line-height: 0.9;
+        text-shadow: 0 0 20px rgba(118, 185, 0, 0.4);
+      }
+      h2 {
+        font-size: 3rem;
+        color: var(--nv-bright-green);
+        margin-bottom: 40px;
+        border-bottom: 2px solid rgba(118, 185, 0, 0.3);
+        padding-bottom: 10px;
+        display: inline-block;
+      }
+      h3 {
+        font-size: 1.5rem;
+        color: var(--nv-green);
+        margin-bottom: 10px;
+      }
+      p {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+      }
+
+      /* --- COMPONENTS --- */
+      .content-area {
+        position: relative;
+        z-index: 10;
+        width: 100%;
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 30px;
+        border-radius: 4px;
+      }
+      .row {
+        display: flex;
+        gap: 60px;
+        flex-wrap: wrap;
+      }
+      .col {
+        flex: 1;
+        min-width: 300px;
+      }
+
+      .tech-image {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 4px;
+        border: 1px solid rgba(118, 185, 0, 0.3);
+        background-color: #111;
+      }
+
+      .image-wrapper {
+        position: relative;
+        overflow: hidden;
+        border-radius: 4px;
+      }
+
+      .scan-line {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--nv-bright-green);
+        box-shadow: 0 0 10px var(--nv-bright-green);
+        animation: scan 3s linear infinite;
+        opacity: 0.5;
+      }
+      @keyframes scan {
+        0% {
+          top: 0;
+        }
+        100% {
+          top: 100%;
+        }
+      }
+
+      .metric-box {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        background: linear-gradient(
+          90deg,
+          rgba(118, 185, 0, 0.1) 0%,
+          transparent 100%
+        );
+        padding: 15px;
+        border-left: 4px solid var(--nv-green);
+        margin-top: 20px;
+      }
+      .metric-val {
+        font-family: "Rajdhani";
+        font-size: 36px;
+        color: var(--nv-bright-green);
+        font-weight: 700;
+      }
+
+      /* Timeline */
+      .timeline-container {
+        position: relative;
+        padding: 60px 0;
+        width: 100%;
+      }
+      .timeline-track {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .timeline-active {
+        position: absolute;
+        top: 50%;
+        height: 2px;
+        background: var(--nv-green);
+        box-shadow: 0 0 10px var(--nv-green);
+      }
+      .timeline-point {
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 16px;
+        height: 16px;
+        background: var(--nv-green);
+        border-radius: 50%;
+      }
+      .timeline-label {
+        position: absolute;
+        top: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-weight: 700;
+        color: var(--nv-bright-green);
+      }
+      .timeline-desc {
+        position: absolute;
+        top: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        width: 150px;
+        font-size: 14px;
+      }
+
+      .glitch {
+        position: relative;
+        display: inline-block;
+      }
+
+      .code-block {
+        background: #0d1117;
+        border: 1px solid #30363d;
+        padding: 20px;
+        font-family: monospace;
+        color: #e6edf3;
+        margin-top: 15px;
+      }
+
       .tech-table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 10px;
+        margin-top: 20px;
       }
       .tech-table td {
-        padding: 10px;
+        padding: 15px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        font-size: 0.9rem;
       }
-      .label-red {
-        color: var(--nv-red);
-        font-weight: bold;
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateX(-50%) translateY(0);
+        }
+        50% {
+          transform: translateX(-50%) translateY(-10px);
+        }
       }
     </style>
   </head>
   <body>
-    <section
+    <div
       class="slide-container"
       style="
-        background-image: linear-gradient(
+        background: url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=2072&auto=format&fit=crop')
+          center/cover no-repeat;
+        background-attachment: fixed;
+      "
+    >
+      <div
+        style="
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
             90deg,
             rgba(0, 0, 0, 0.9) 0%,
             rgba(0, 0, 0, 0.4) 100%
-          ),
-          url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000');
-      "
-    >
-      <div class="content-area reveal active">
-        <h4 style="color: var(--nv-green); margin-bottom: 10px">
-          CONFIDENTIAL // STRATEGY DECK
-        </h4>
-        <h1>
-          SOVEREIGN<br /><span
-            style="color: transparent; -webkit-text-stroke: 2px white"
-            >AEROSPACE</span
+          );
+        "
+      ></div>
+      <div class="content-area reveal active" style="padding-left: 20px">
+        <div style="border-left: 8px solid var(--nv-green); padding-left: 40px">
+          <h4 style="color: var(--nv-green); margin-bottom: 10px">
+            CONFIDENTIAL // STRATEGY
+          </h4>
+          <h1 class="glitch" data-text="SOVEREIGN">SOVEREIGN</h1>
+          <br />
+          <h1 style="color: transparent; -webkit-text-stroke: 2px white">
+            AEROSPACE
+          </h1>
+          <p style="font-size: 24px; margin-top: 30px; color: #ddd">
+            Industrializing Physics-ML for National Security.
+          </p>
+        </div>
+      </div>
+      <div
+        style="
+          position: absolute;
+          bottom: 40px;
+          left: 50%;
+          transform: translateX(-50%);
+          color: var(--nv-green);
+          animation: bounce 2s infinite;
+          text-align: center;
+        "
+      >
+        <div style="font-size: 12px; letter-spacing: 2px">
+          SCROLL TO INITIALIZE
+        </div>
+        <i class="fa-solid fa-chevron-down" style="margin-top: 10px"></i>
+      </div>
+    </div>
+
+    <div class="slide-container">
+      <h2 class="reveal">Mission Control</h2>
+      <div class="content-area row">
+        <div
+          class="col card reveal delay-100"
+          style="border-left: 4px solid var(--nv-green)"
+        >
+          <h3>Market Opportunity</h3>
+          <p>
+            <strong>Trigger:</strong> Azure Anomaly Detection Exit (Oct 2026).
+          </p>
+          <p>
+            <strong>Threat:</strong> Competitor encroachment on DoD workloads.
+          </p>
+        </div>
+        <div
+          class="col card reveal delay-200"
+          style="border-left: 4px solid var(--nv-blue)"
+        >
+          <h3>Execution Portfolio</h3>
+          <p>
+            Immediate focus on Weather, Satellites, FAA, and Aircraft Health
+            Monitoring.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-container">
+      <h2 class="reveal">The Sovereign Moat</h2>
+      <div class="content-area row">
+        <div class="col reveal">
+          <div class="card" style="height: 100%">
+            <h3>Anti-Cloud Thesis</h3>
+            <p>
+              Classified data cannot live on public servers. We provide the
+              Air-Gapped alternative.
+            </p>
+            <div style="margin-top: 30px">
+              <p>
+                <i
+                  class="fa-solid fa-server"
+                  style="color: var(--nv-green)"
+                ></i>
+                On-Premise AI
+              </p>
+              <p>
+                <i
+                  class="fa-solid fa-building-shield"
+                  style="color: var(--nv-green)"
+                ></i>
+                Sovereign Control
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col reveal delay-200">
+          <div class="image-wrapper">
+            <img
+              src="https://images.unsplash.com/photo-1558494949-ef526b0042a0?q=80&w=2000&auto=format&fit=crop"
+              alt="Server Room"
+              class="tech-image"
+              loading="lazy"
+            />
+            <div class="scan-line"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-container">
+      <h2 class="reveal">Operational Pedigree</h2>
+      <div class="content-area">
+        <div class="timeline-container reveal">
+          <div class="timeline-track"></div>
+          <div class="timeline-active" style="width: 100%"></div>
+          <div class="timeline-point" style="left: 10%">
+            <div class="timeline-label">1998</div>
+            <div class="timeline-desc">NASA Ops Start</div>
+          </div>
+          <div class="timeline-point" style="left: 40%">
+            <div class="timeline-label">2010</div>
+            <div class="timeline-desc">GOES-R Lead</div>
+          </div>
+          <div class="timeline-point" style="left: 70%">
+            <div class="timeline-label">2015</div>
+            <div class="timeline-desc">NASA CARA</div>
+          </div>
+          <div
+            class="timeline-point"
+            style="left: 100%; background: var(--nv-bright-green)"
           >
-        </h1>
-        <p style="font-size: 1.5rem; color: #ddd">
-          Industrializing Physics-ML for National Security & Global Aviation.
-        </p>
-        <div style="margin-top: 50px; display: flex; gap: 40px">
-          <div>
-            <small style="color: var(--nv-green)">VP/GM</small><br />Sovereign
-            Aerospace
-          </div>
-          <div>
-            <small style="color: var(--nv-green)">CLEARANCE</small><br />NVIDIA
-            INTERNAL
+            <div class="timeline-label" style="color: white">2025</div>
+            <div class="timeline-desc">Sovereign Formation</div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <section class="slide-container">
-      <div class="content-area reveal">
-        <h2>Mission Control</h2>
-        <div class="row">
-          <div class="col card" style="border-left: 5px solid var(--nv-red)">
-            <h3>The $1.4B Vacuum</h3>
-            <p>
-              Azure exits Anomaly Detection in Oct 2026. This creates a critical
-              vacuum in DoD and FAA health monitoring systems.
-            </p>
-            <div class="label-red">PRIORITY: IMMEDIATE</div>
-          </div>
-          <div class="col card" style="border-left: 5px solid var(--nv-orange)">
-            <h3>Market Potential</h3>
-            <p>
-              Conservative TAM of $140B by 2030 across Sovereign Weather,
-              Aircraft Health, and Satellite Ops.
-            </p>
-            <div
-              style="
-                font-size: 2.5rem;
-                font-family: 'Rajdhani';
-                color: var(--nv-orange);
-              "
-            >
-              $140B
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide-container">
-      <div class="content-area reveal">
-        <h2>Strategic Synergies</h2>
-        <div class="row">
-          <div class="col">
-            <p>
-              "We aren't selling apps. We are selling the Operating System for
-              Sovereign Airspace."
-            </p>
-            <div class="card">
-              <p>
-                <strong>Earth-2:</strong> Physics-ML for Climate Resilience &
-                Prediction.
-              </p>
-              <p>
-                <strong>Omniverse:</strong> Digital Twins for Aircraft
-                Maintenance & Operations.
-              </p>
-              <p>
-                <strong>Public Sector:</strong> Secure, Air-Gapped
-                High-Performance Compute.
-              </p>
-            </div>
-          </div>
-          <div class="col">
-            <div class="venn-container">
-              <div class="circle c1">PUBLIC SECTOR</div>
-              <div class="circle c2">EARTH-2</div>
-              <div class="circle c3">OMNIVERSE</div>
-              <div class="center-label">SOVEREIGN AEROSPACE</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section
+    <div
       class="slide-container"
       style="
-        background-image: linear-gradient(
-            rgba(0, 0, 0, 0.8),
-            rgba(0, 0, 0, 0.8)
-          ),
-          url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=2000');
+        background: url('https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?q=80&w=2000&auto=format&fit=crop')
+          center/cover no-repeat;
       "
     >
-      <div class="content-area reveal">
-        <h2>Operational Pedigree</h2>
-        <p>
-          Expertise forged in 26 years of mission-critical failures and
-          successes.
-        </p>
-        <div class="timeline">
-          <div class="t-item">
-            <div class="t-year">1998</div>
-            <div class="t-desc">NASA/NOAA Mission Ops</div>
-          </div>
-          <div class="t-item">
-            <div class="t-year">2010</div>
-            <div class="t-desc">GOES-R Flight Ops Lead</div>
-          </div>
-          <div class="t-item">
-            <div class="t-year">2015</div>
-            <div class="t-desc">NASA CARA Avoidance</div>
-          </div>
-          <div class="t-item">
-            <div class="t-year">2025</div>
-            <div class="t-desc" style="color: var(--nv-bright-green)">
-              Vertical Launch
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide-container">
-      <div class="content-area reveal">
-        <h2>Technical Feasibility: TRL-9</h2>
-        <div class="row">
-          <div class="col">
-            <p>
-              The math is identical across domains. Accelerating proven physics
-              using CUDA kernels on Blackwell.
-            </p>
-            <div class="code-block">
-              // Physics-ML Kernel Acceleration<br />
-              struct DragEquation {<br />
-              &nbsp;&nbsp;float64 coefficient_drag;<br />
-              &nbsp;&nbsp;float64 fluid_density;<br />
-              &nbsp;&nbsp;float64 velocity_squared;<br />
-              };
-            </div>
-          </div>
-          <div class="col card">
-            <h3>Blackwell Optimization</h3>
-            <p>Speed: 500x Acceleration vs Legacy CPU.</p>
-            <p>Efficiency: 10,000x Better for Hypersonic Models.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section
-      class="slide-container"
-      style="
-        background-image: linear-gradient(
-            rgba(0, 0, 0, 0.85),
-            rgba(0, 0, 0, 0.85)
-          ),
-          url('https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?q=80&w=2000');
-      "
-    >
-      <div class="content-area reveal">
+      <div
+        style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.85)"
+      ></div>
+      <div class="content-area reveal" style="max-width: 600px">
         <h2 style="color: var(--nv-red); border-color: var(--nv-red)">
           Weather & Climate
         </h2>
-        <div class="row">
-          <div class="col card">
-            <h3>PhysicsNeMo + CorrDiff</h3>
-            <p>
-              Problem: Legacy CPU models are too slow for hypersonic and
-              tactical flight windows.
-            </p>
-            <table class="tech-table">
-              <tr>
-                <td>Performance</td>
-                <td style="color: var(--nv-bright-green)">500x Speedup</td>
-              </tr>
-              <tr>
-                <td>Resolution</td>
-                <td style="color: var(--nv-bright-green)">
-                  2km Scale (Global)
-                </td>
-              </tr>
-            </table>
-          </div>
-          <div class="col">
-            <p>
-              We provide Allied Nations with independent climate
-              intelligence—free from foreign cloud dependency.
-            </p>
-          </div>
+        <div class="card">
+          <h3>500x Acceleration</h3>
+          <p>
+            Replacing legacy CPU models with Physics-ML kernels running on
+            Blackwell B200.
+          </p>
+          <table class="tech-table">
+            <tr>
+              <td>Precision</td>
+              <td style="color: var(--nv-bright-green)">CorrDiff High-Res</td>
+            </tr>
+            <tr>
+              <td>Hardware</td>
+              <td style="color: var(--nv-bright-green)">NVIDIA Blackwell</td>
+            </tr>
+          </table>
         </div>
       </div>
-    </section>
-
-    <section class="slide-container">
-      <div class="content-area reveal">
-        <h2 style="color: var(--nv-blue); border-color: var(--nv-blue)">
-          Satellite Operations
-        </h2>
-        <div class="row">
-          <div class="col">
-            <p>
-              Managing orbital debris and anomaly detection for sovereign
-              constellations.
-            </p>
-            <div class="card" style="border-left: 4px solid var(--nv-blue)">
-              <p>NASA CARA Logic integrated into Blackwell-native inference.</p>
-            </div>
-          </div>
-          <div class="col card">
-            <h3>Real-Time TLE Processing</h3>
-            <p>
-              Tracking 30,000+ objects with sub-millisecond latency for
-              collision avoidance maneuvers.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section
-      class="slide-container"
-      style="
-        background-image: linear-gradient(90deg, #000 0%, transparent 100%),
-          url('https://images.unsplash.com/photo-1558494949-ef526b0042a0?q=80&w=2000');
-      "
-    >
-      <div class="content-area reveal">
-        <h2>The Sovereign Moat</h2>
-        <div class="row">
-          <div class="col card">
-            <h3>The Anti-Cloud Thesis</h3>
-            <p>
-              NATO and Allied Nations cannot put classified targeting or flight
-              data on public clouds. We provide the air-gapped solution.
-            </p>
-            <ul
-              style="
-                list-style: none;
-                color: var(--nv-bright-green);
-                font-weight: bold;
-              "
-            >
-              <li>✓ AIR-GAPPED</li>
-              <li>✓ ON-PREMISE</li>
-              <li>✓ SOVEREIGN CONTROL</li>
-            </ul>
-          </div>
-          <div class="col">
-            <h1 style="font-size: 3rem; margin-top: 20px">
-              READY FOR<br />INITIALIZE.
-            </h1>
-          </div>
-        </div>
-      </div>
-    </section>
+    </div>
 
     <script>
+      // Simple reveal on scroll
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -515,6 +510,7 @@
         },
         { threshold: 0.1 }
       );
+
       document
         .querySelectorAll(".reveal")
         .forEach((el) => observer.observe(el));
