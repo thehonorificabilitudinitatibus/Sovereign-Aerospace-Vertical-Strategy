@@ -9,172 +9,430 @@
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 <style>
-/* --- 1. CORE HUD STYLING --- */
+/* =========================================
+1. CORE HUD SYSTEM & VARIABLES
+=========================================
+*/
 :root {
---nv-green: #76b900; --nv-bright-green: #9aff00; --nv-black: #000000;
---nv-dark: #0b0c10; --nv-panel: rgba(20, 24, 30, 0.7); --nv-border: rgba(118, 185, 0, 0.4);
---nv-blue: #00a3e0; --nv-red: #e30613; --nv-orange: #ff8200;
---text-main: #ffffff; --text-muted: #a1a1aa;
+--nv-green: #76b900;
+--nv-bright-green: #9aff00;
+--nv-black: #000000;
+--nv-dark: #0b0c10;
+--nv-panel: rgba(20, 24, 30, 0.7);
+--nv-border: rgba(118, 185, 0, 0.4);
+--nv-blue: #00a3e0;
+--nv-red: #e30613;
+--nv-orange: #ff8200;
+--text-main: #ffffff;
+--text-muted: #a1a1aa;
+--transition-fast: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+--transition-slow: 0.8s cubic-bezier(0.5, 0, 0, 1);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
+
 body {
 background-color: #050505;
-background-image: radial-gradient(circle at 50% 50%, rgba(118, 185, 0, 0.03) 0%, transparent 60%),
-linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+background-image: 
+    radial-gradient(circle at 50% 50%, rgba(118, 185, 0, 0.03) 0%, transparent 60%),
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 background-size: 100% 100%, 40px 40px, 40px 40px;
-font-family: "Inter", sans-serif; color: var(--text-main); overflow-x: hidden; scroll-behavior: smooth;
+font-family: "Inter", sans-serif;
+color: var(--text-main);
+overflow-x: hidden;
+scroll-behavior: smooth;
 }
 
-/* --- 2. LAYOUT ENGINE --- */
+/* =========================================
+2. LAYOUT ENGINE
+=========================================
+*/
 .slide-container {
-position: relative; width: 100%; min-height: 100vh; padding: 80px 10%;
-display: flex; flex-direction: column; justify-content: center;
+position: relative;
+width: 100%;
+min-height: 100vh;
+padding: 80px 10%;
+display: flex;
+flex-direction: column;
+justify-content: center;
 background: radial-gradient(circle at top right, rgba(20, 25, 35, 1) 0%, rgba(5, 5, 8, 1) 100%);
-border-bottom: 1px solid rgba(118, 185, 0, 0.2); overflow: hidden;
+border-bottom: 1px solid rgba(118, 185, 0, 0.2);
+overflow: hidden;
 }
+
 .slide-container::after {
-content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2; opacity: 0.3;
+content: "";
+position: absolute;
+inset: 0;
 background: 
-linear-gradient(to right, var(--nv-green) 2px, transparent 2px) 0 0,
-linear-gradient(to bottom, var(--nv-green) 2px, transparent 2px) 0 0,
-linear-gradient(to left, var(--nv-green) 2px, transparent 2px) 100% 0,
-linear-gradient(to bottom, var(--nv-green) 2px, transparent 2px) 100% 0,
-linear-gradient(to left, var(--nv-green) 2px, transparent 2px) 100% 100%,
-linear-gradient(to top, var(--nv-green) 2px, transparent 2px) 100% 100%,
-linear-gradient(to right, var(--nv-green) 2px, transparent 2px) 0 100%,
-linear-gradient(to top, var(--nv-green) 2px, transparent 2px) 0 100%;
-background-size: 30px 30px; background-repeat: no-repeat;
+    linear-gradient(to right, var(--nv-green) 2px, transparent 2px) 0 0,
+    linear-gradient(to bottom, var(--nv-green) 2px, transparent 2px) 0 0,
+    linear-gradient(to left, var(--nv-green) 2px, transparent 2px) 100% 0,
+    linear-gradient(to bottom, var(--nv-green) 2px, transparent 2px) 100% 0,
+    linear-gradient(to left, var(--nv-green) 2px, transparent 2px) 100% 100%,
+    linear-gradient(to top, var(--nv-green) 2px, transparent 2px) 100% 100%,
+    linear-gradient(to right, var(--nv-green) 2px, transparent 2px) 0 100%,
+    linear-gradient(to top, var(--nv-green) 2px, transparent 2px) 0 100%;
+background-size: 30px 30px;
+background-repeat: no-repeat;
+opacity: 0.3;
+pointer-events: none;
+z-index: 2;
 }
 
-/* --- 3. COMPONENTS & "BROKEN" VENN --- */
-.content-area { position: relative; z-index: 10; width: 100%; }
-.row { display: flex; gap: 40px; flex-wrap: wrap; }
-.col { flex: 1; min-width: 300px; }
-.card { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 30px; border-radius: 4px; height: 100%; }
-.tech-image { width: 100%; border-radius: 4px; border: 1px solid rgba(118, 185, 0, 0.3); background-color: #111; object-fit: cover; }
+/* =========================================
+3. TYPOGRAPHY
+=========================================
+*/
+h1, h2, h3, h4 {
+font-family: "Rajdhani", sans-serif;
+text-transform: uppercase;
+letter-spacing: 2px;
+}
 
-.venn-wrapper { position: relative; height: 400px; display: flex; justify-content: center; align-items: center; }
-.v-circle { position: absolute; width: 200px; height: 200px; border-radius: 50%; border: 2px solid; display: flex; align-items: center; justify-content: center; text-align: center; font-family: 'Rajdhani'; font-weight: bold; background: rgba(0,0,0,0.4); }
-
-/* --- 4. DATA VISUALS --- */
-.timeline-container { position: relative; padding: 60px 0; width: 100%; }
-.timeline-track { position: absolute; top: 50%; width: 100%; height: 2px; background: rgba(255, 255, 255, 0.1); }
-.timeline-active { position: absolute; top: 50%; height: 2px; background: var(--nv-green); box-shadow: 0 0 10px var(--nv-green); }
-.timeline-point { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 16px; height: 16px; background: var(--nv-green); border-radius: 50%; }
-.timeline-label { position: absolute; top: -40px; left: 50%; transform: translateX(-50%); font-weight: 700; color: var(--nv-bright-green); }
-.timeline-desc { position: absolute; top: 30px; left: 50%; transform: translateX(-50%); text-align: center; width: 150px; font-size: 14px; }
-
-/* --- 5. TYPOGRAPHY & FX --- */
-h1, h2, h3 { font-family: "Rajdhani", sans-serif; text-transform: uppercase; letter-spacing: 2px; }
 h1 { font-size: 5vw; font-weight: 700; line-height: 0.9; text-shadow: 0 0 20px rgba(118, 185, 0, 0.4); }
-h2 { font-size: 3rem; color: var(--nv-bright-green); margin-bottom: 40px; border-bottom: 2px solid rgba(118, 185, 0, 0.3); display: inline-block; }
-.reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+h2 { font-size: 3rem; color: var(--nv-bright-green); margin-bottom: 40px; border-bottom: 2px solid rgba(118, 185, 0, 0.3); display: inline-block; padding-bottom: 10px; }
+h3 { font-size: 1.5rem; color: var(--nv-green); margin-bottom: 15px; }
+p { font-size: 1.1rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 15px; }
+
+/* =========================================
+4. REVEAL SYSTEM
+=========================================
+*/
+.reveal { opacity: 0; transform: translateY(40px); transition: var(--transition-slow); }
 .reveal.active { opacity: 1; transform: translateY(0); }
-.scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--nv-bright-green); box-shadow: 0 0 10px var(--nv-bright-green); animation: scan 3s linear infinite; opacity: 0.5; }
-@keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+.delay-100 { transition-delay: 0.1s; }
+.delay-200 { transition-delay: 0.2s; }
+.delay-300 { transition-delay: 0.3s; }
+
+/* =========================================
+5. CUSTOM COMPONENTS
+=========================================
+*/
+.content-area { position: relative; z-index: 10; width: 100%; }
+.row { display: flex; gap: 40px; flex-wrap: wrap; margin-bottom: 40px; }
+.col { flex: 1; min-width: 320px; }
+
+.card {
+background: rgba(255, 255, 255, 0.02);
+backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.1);
+padding: 30px;
+border-radius: 4px;
+transition: var(--transition-fast);
+height: 100%;
+}
+
+.card:hover { border-color: var(--nv-green); background: rgba(118, 185, 0, 0.05); }
+
+.tech-image {
+width: 100%;
+height: 350px;
+object-fit: cover;
+border-radius: 4px;
+border: 1px solid rgba(118, 185, 0, 0.3);
+background-color: #111;
+display: block;
+}
+
+.image-wrapper { position: relative; overflow: hidden; border-radius: 4px; }
+.scan-line {
+position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+background: var(--nv-bright-green);
+box-shadow: 0 0 10px var(--nv-bright-green);
+animation: scan 3s linear infinite;
+opacity: 0.5;
+}
+
+.tech-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-family: 'Inter'; }
+.tech-table td { padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.9rem; }
+.tech-table tr td:first-child { color: var(--nv-green); font-weight: 600; text-transform: uppercase; width: 40%; }
+
+.venn-container { position: relative; height: 400px; width: 100%; display: flex; justify-content: center; align-items: center; }
+.v-circle { position: absolute; width: 220px; height: 220px; border-radius: 50%; border: 2px solid; display: flex; align-items: center; justify-content: center; font-family: 'Rajdhani'; font-weight: 700; background: rgba(0,0,0,0.4); mix-blend-mode: screen; }
+
+/* =========================================
+6. TIMELINE ENGINE
+=========================================
+*/
+.timeline-container { position: relative; padding: 80px 0; width: 100%; }
+.timeline-track { position: absolute; top: 50%; width: 100%; height: 2px; background: rgba(255, 255, 255, 0.1); }
+.timeline-active { position: absolute; top: 50%; height: 2px; background: var(--nv-green); box-shadow: 0 0 15px var(--nv-green); width: 0; transition: width 2s ease-in-out; }
+.timeline-point { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 14px; height: 14px; background: var(--nv-green); border-radius: 50%; cursor: pointer; }
+.timeline-label { position: absolute; top: -45px; left: 50%; transform: translateX(-50%); font-weight: 700; color: var(--nv-bright-green); white-space: nowrap; }
+.timeline-desc { position: absolute; top: 35px; left: 50%; transform: translateX(-50%); text-align: center; width: 160px; font-size: 13px; color: var(--text-muted); }
+
+/* =========================================
+7. ANIMATION KEYFRAMES
+=========================================
+*/
+@keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
+@keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-10px); } }
+@keyframes glitch { 0% { clip-path: inset(0 0 0 0); } 5% { clip-path: inset(10% 0 30% 0); } 10% { clip-path: inset(40% 0 10% 0); } 15% { clip-path: inset(0 0 0 0); } }
+
 </style>
 </head>
 <body>
 
-<div class="slide-container" style="background: url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=2072&auto=format&fit=crop') center/cover; background-attachment: fixed;">
-    <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.85);"></div>
+<section class="slide-container" style="background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000') center/cover no-repeat; background-attachment: fixed;">
+    <div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 100%);"></div>
     <div class="content-area reveal active">
-        <div style="border-left: 8px solid var(--nv-green); padding-left: 40px">
-            <h4 style="color: var(--nv-green); margin-bottom: 10px">CONFIDENTIAL // STRATEGY</h4>
-            <h1>SOVEREIGN</h1>
-            <h1 style="color: transparent; -webkit-text-stroke: 2px white">AEROSPACE</h1>
-            <p style="font-size: 24px; margin-top: 30px; color: #ddd">Industrializing Physics-ML for National Security.</p>
+        <div style="border-left: 8px solid var(--nv-green); padding-left: 50px">
+            <h4 style="color: var(--nv-green); margin-bottom: 15px; letter-spacing: 5px">SECURE BOOT // STRATEGY V3.0.4</h4>
+            <h1 style="margin-bottom: 0;">SOVEREIGN</h1>
+            <h1 style="color: transparent; -webkit-text-stroke: 2px white; margin-top: -10px;">AEROSPACE</h1>
+            <p style="font-size: 26px; margin-top: 40px; color: #eee; max-width: 700px; font-weight: 300;">
+                Industrializing Physics-ML and Digital Twins for National Security & Critical Infrastructure.
+            </p>
+            <div style="margin-top: 50px; display: flex; gap: 30px;">
+                <div style="border: 1px solid var(--nv-green); padding: 10px 20px; color: var(--nv-green); font-family: 'Rajdhani'; font-weight: 700;">NODE: BLACKWELL_01</div>
+                <div style="border: 1px solid var(--nv-blue); padding: 10px 20px; color: var(--nv-blue); font-family: 'Rajdhani'; font-weight: 700;">STATUS: OPERATIONAL</div>
+            </div>
         </div>
     </div>
-</div>
+    <div style="position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%); color: var(--nv-green); animation: bounce 2s infinite; text-align: center;">
+        <p style="font-size: 11px; letter-spacing: 3px; margin-bottom: 10px">INITIALIZING VERTICAL STACK</p>
+        <i class="fa-solid fa-chevron-down"></i>
+    </div>
+</section>
 
-<div class="slide-container">
+<section class="slide-container">
     <h2 class="reveal">Mission Control</h2>
-    <div class="content-area row">
-        <div class="col card reveal" style="border-left: 4px solid var(--nv-green)">
-            <h3>Market Opportunity</h3>
-            <p><strong>Trigger:</strong> Azure Anomaly Detection Exit (Oct 2026).</p>
-            <p><strong>Threat:</strong> Competitor encroachment on DoD workloads.</p>
-            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800" class="tech-image" style="margin-top:20px; height:200px;">
-        </div>
-        <div class="col card reveal" style="border-left: 4px solid var(--nv-blue); transition-delay: 0.2s;">
-            <h3>Execution Portfolio</h3>
-            <p>Immediate focus on Weather, Satellites, FAA, and Aircraft Health Monitoring.</p>
-            <img src="https://images.unsplash.com/photo-1517976487492-5750f3195933?q=80&w=800" class="tech-image" style="margin-top:20px; height:200px;">
+    <div class="content-area">
+        <div class="row">
+            <div class="col card reveal delay-100" style="border-left: 4px solid var(--nv-green)">
+                <h3>Strategic Trigger</h3>
+                <p><strong>Azure Anomaly Detection Sunset:</strong> Microsoft's exit from specialized AI anomaly detection in Oct 2026 creates a massive vacuum in DoD/Industrial monitoring.</p>
+                <p><strong>Competitor Landscape:</strong> Rapid encroachment by Palantir and Anduril necessitates a native NVIDIA-first sovereign response.</p>
+                <table class="tech-table">
+                    <tr><td>Target Alpha</td><td>Aerospace Maintenance</td></tr>
+                    <tr><td>Target Beta</td><td>Satellite Anomaly</td></tr>
+                    <tr><td>Market Gap</td><td>Air-Gapped Physics ML</td></tr>
+                </table>
+            </div>
+            <div class="col card reveal delay-200" style="border-left: 4px solid var(--nv-blue)">
+                <h3>Operational Focus</h3>
+                <p>We target the "High-Consequence" flight operations where standard cloud-AI latency and security protocols are insufficient.</p>
+                <img src="https://images.unsplash.com/photo-1517976487492-5750f3195933?q=80&w=800" class="tech-image" style="height: 180px; margin-top: 15px;">
+            </div>
         </div>
     </div>
-</div>
+</section>
 
-<div class="slide-container">
+<section class="slide-container">
     <h2 class="reveal">Strategic Synergies</h2>
     <div class="content-area row">
         <div class="col reveal">
-             <div class="venn-wrapper">
-                 <div class="v-circle" style="border-color: var(--nv-green); transform: translateY(-60px);">PUBLIC SECTOR</div>
-                 <div class="v-circle" style="border-color: var(--nv-blue); transform: translateX(-60px) translateY(40px);">EARTH-2</div>
-                 <div class="v-circle" style="border-color: var(--nv-orange); transform: translateX(60px) translateY(40px);">OMNIVERSE</div>
-                 <div style="position:absolute; color: var(--nv-bright-green); font-weight: 900; background:black; padding: 5px; border: 1px solid var(--nv-green);">SOVEREIGN</div>
-             </div>
+            <div class="venn-container">
+                <div class="v-circle" style="border-color: var(--nv-green); transform: translateY(-70px);">PUBLIC SECTOR</div>
+                <div class="v-circle" style="border-color: var(--nv-blue); transform: translateX(-70px) translateY(50px);">EARTH-2</div>
+                <div class="v-circle" style="border-color: var(--nv-orange); transform: translateX(70px) translateY(50px);">OMNIVERSE</div>
+                <div style="position:absolute; z-index:20; background:black; padding: 8px 15px; border: 1px solid var(--nv-green); color: var(--nv-bright-green); font-weight: 800; font-family: 'Rajdhani'; font-size: 14px;">SOVEREIGN</div>
+            </div>
         </div>
-        <div class="col reveal" style="transition-delay: 0.2s;">
-             <div class="card">
-                 <h3>One NVIDIA Strategy</h3>
-                 <p>Integrating the entire portfolio for Aerospace dominance.</p>
-                 <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800" class="tech-image" style="margin-top:20px;">
-             </div>
+        <div class="col reveal delay-200">
+            <div class="card">
+                <h3>The Unified Stack</h3>
+                <p>We are not building isolated applications. We are industrializing the NVIDIA physics-ML stack:</p>
+                <ul style="list-style: none; color: var(--text-muted); font-size: 0.95rem;">
+                    <li style="margin-bottom: 12px;"><i class="fa-solid fa-check" style="color: var(--nv-green); margin-right: 10px;"></i> <strong>Earth-2:</strong> Hyper-local weather for flight path optimization.</li>
+                    <li style="margin-bottom: 12px;"><i class="fa-solid fa-check" style="color: var(--nv-green); margin-right: 10px;"></i> <strong>Omniverse:</strong> Digital twins for real-time turbine health.</li>
+                    <li style="margin-bottom: 12px;"><i class="fa-solid fa-check" style="color: var(--nv-green); margin-right: 10px;"></i> <strong>Holoscan:</strong> Low-latency sensor fusion for FAA systems.</li>
+                </ul>
+                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800" class="tech-image" style="margin-top: 20px; height: 160px;">
+            </div>
         </div>
     </div>
-</div>
+</section>
 
-<div class="slide-container">
+<section class="slide-container">
     <h2 class="reveal">The Sovereign Moat</h2>
     <div class="content-area row">
         <div class="col reveal">
-          <div class="card">
-            <h3>Anti-Cloud Thesis</h3>
-            <p>Classified data cannot live on public servers. We provide the Air-Gapped alternative.</p>
-            <div style="margin-top: 30px">
-              <p><i class="fa-solid fa-server" style="color: var(--nv-green)"></i> On-Premise AI</p>
-              <p><i class="fa-solid fa-building-shield" style="color: var(--nv-green)"></i> Sovereign Control</p>
+            <div class="card" style="height: 100%">
+                <h3>Anti-Cloud Thesis</h3>
+                <p>Classified data and critical national infrastructure telemetry cannot reside on multi-tenant public cloud instances.</p>
+                <div style="margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+                    <p style="font-family: 'Rajdhani'; color: var(--nv-green); font-weight: 700;"><i class="fa-solid fa-shield-halved"></i> AIR-GAPPED DEPLOYMENT</p>
+                    <p>On-premise hardware clusters running proprietary Physics-ML kernels without external dependencies.</p>
+                    <p style="font-family: 'Rajdhani'; color: var(--nv-blue); font-weight: 700; margin-top: 20px;"><i class="fa-solid fa-lock"></i> SOVEREIGN CONTROL</p>
+                    <p>Complete ownership of weights, training data, and inference pipelines.</p>
+                </div>
             </div>
-          </div>
         </div>
-        <div class="col reveal" style="transition-delay: 0.2s;">
-          <div style="position:relative; overflow:hidden; border-radius:4px;">
-            <img src="https://images.unsplash.com/photo-1558494949-ef526b0042a0?q=80&w=1200" class="tech-image" style="height:450px;" />
-            <div class="scan-line"></div>
-          </div>
+        <div class="col reveal delay-200">
+            <div class="image-wrapper">
+                <img src="https://images.unsplash.com/photo-1558494949-ef526b0042a0?q=80&w=2000" class="tech-image" style="height: 500px;">
+                <div class="scan-line"></div>
+            </div>
         </div>
     </div>
-</div>
+</section>
 
-<div class="slide-container">
+<section class="slide-container">
     <h2 class="reveal">Operational Pedigree</h2>
     <div class="content-area">
         <div class="timeline-container reveal">
-          <div class="timeline-track"></div>
-          <div class="timeline-active" style="width: 100%"></div>
-          <div class="timeline-point" style="left: 10%"><div class="timeline-label">1998</div><div class="timeline-desc">NASA Ops Start</div></div>
-          <div class="timeline-point" style="left: 40%"><div class="timeline-label">2010</div><div class="timeline-desc">GOES-R Lead</div></div>
-          <div class="timeline-point" style="left: 70%"><div class="timeline-label">2015</div><div class="timeline-desc">NASA CARA</div></div>
-          <div class="timeline-point" style="left: 100%; background: var(--nv-bright-green)"><div class="timeline-label" style="color: white">2025</div><div class="timeline-desc">Sovereign Formation</div></div>
+            <div class="timeline-track"></div>
+            <div class="timeline-active" id="timelineProgress"></div>
+            <div class="timeline-point" style="left: 5%"><div class="timeline-label">1998</div><div class="timeline-desc">NASA Mission Support Ops Start</div></div>
+            <div class="timeline-point" style="left: 30%"><div class="timeline-label">2010</div><div class="timeline-desc">GOES-R Lead System Architecture</div></div>
+            <div class="timeline-point" style="left: 60%"><div class="timeline-label">2015</div><div class="timeline-desc">NASA CARA Conjunction Assessment</div></div>
+            <div class="timeline-point" style="left: 85%"><div class="timeline-label">2023</div><div class="timeline-desc">Project GAEA Climate Model Integration</div></div>
+            <div class="timeline-point" style="left: 100%; background: var(--nv-bright-green);"><div class="timeline-label" style="color: white">2025</div><div class="timeline-desc">Sovereign Aerospace Formation</div></div>
         </div>
-        <div class="row" style="margin-top:80px">
-             <div class="col"><img src="https://images.unsplash.com/photo-1446776877081-d282a0f896e2?q=80&w=800" class="tech-image"></div>
-             <div class="col"><img src="https://images.unsplash.com/photo-1614728263952-84ea206f99b6?q=80&w=800" class="tech-image"></div>
+        <div class="row" style="margin-top: 100px;">
+            <div class="col reveal delay-100">
+                <img src="https://images.unsplash.com/photo-1446776877081-d282a0f896e2?q=80&w=1000" class="tech-image" style="height: 250px;">
+                <p style="font-size: 13px; text-align: center; margin-top: 10px;">GOES-R Satellite Series Integration</p>
+            </div>
+            <div class="col reveal delay-200">
+                <img src="https://images.unsplash.com/photo-1614728263952-84ea206f99b6?q=80&w=1000" class="tech-image" style="height: 250px;">
+                <p style="font-size: 13px; text-align: center; margin-top: 10px;">Space Situational Awareness Hub</p>
+            </div>
         </div>
     </div>
-</div>
+</section>
 
 
+
+<section class="slide-container" style="background: url('https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?q=80&w=2000') center/cover no-repeat;">
+    <div style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.88)"></div>
+    <div class="content-area reveal">
+        <h2 style="color: var(--nv-red); border-color: var(--nv-red)">Vertical: Weather & Climate</h2>
+        <div class="row">
+            <div class="col reveal delay-100">
+                <div class="card">
+                    <h3>500x Acceleration</h3>
+                    <p>Replacing legacy CPU-based weather forecasting models with Physics-ML kernels running on Blackwell B200 infrastructure.</p>
+                    <table class="tech-table">
+                        <tr><td>Resolution</td><td style="color: var(--nv-bright-green)">2km Global Mesh</td></tr>
+                        <tr><td>Latency</td><td style="color: var(--nv-bright-green)">Real-time (Inference)</td></tr>
+                        <tr><td>Stack</td><td style="color: var(--nv-bright-green)">NVIDIA CorrDiff</td></tr>
+                        <tr><td>Precision</td><td style="color: var(--nv-bright-green)">FP8 Optimized</td></tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col reveal delay-200">
+                <img src="https://images.unsplash.com/photo-1590055531615-f16d36fed8a1?q=80&w=1000" class="tech-image" style="height: 380px;">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<section class="slide-container">
+    <h2 class="reveal">Vertical: Aircraft Monitoring</h2>
+    <div class="content-area">
+        <div class="row">
+            <div class="col reveal delay-100">
+                <div class="card">
+                    <h3>Predictive Maintenance (PHM)</h3>
+                    <p>Utilizing high-frequency sensor telemetry to predict turbine blade fatigue before failure occurs.</p>
+                    <ul style="color: var(--text-muted); padding: 20px;">
+                        <li style="margin-bottom: 15px;">Real-time vibration analysis via FFT-Kernels.</li>
+                        <li style="margin-bottom: 15px;">Digital twin synchronization using NVIDIA Modulus.</li>
+                        <li style="margin-bottom: 15px;">Automated FAA part-life cycle reporting.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col reveal delay-200">
+                <div class="card" style="background: rgba(118, 185, 0, 0.05);">
+                    <h3 style="color: var(--nv-bright-green);">Case Study: Engine #4</h3>
+                    <p style="font-family: monospace; font-size: 0.85rem;">
+                        [ANALYSIS START]<br>
+                        > SENSOR_ID: E-X900_CFM<br>
+                        > ANOMALY: THERMAL_FLUCTUATION_0.4%<br>
+                        > PREDICTION: BEARING_FAILURE (+140 FLIGHT HOURS)<br>
+                        > ACTION: SCHEDULED REPLACEMENT LOGGED<br>
+                        [ANALYSIS COMPLETE]
+                    </p>
+                    <div style="height: 100px; border: 1px dashed var(--nv-green); margin-top: 20px; background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(118,185,0,0.1) 10px, rgba(118,185,0,0.1) 20px);"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<section class="slide-container">
+    <h2 class="reveal">Sovereign Hardware</h2>
+    <div class="content-area row">
+        <div class="col reveal">
+            <img src="https://images.unsplash.com/photo-1591405351990-4726e331f141?q=80&w=1000" class="tech-image" style="height: 450px;">
+        </div>
+        <div class="col reveal delay-200">
+            <div class="card">
+                <h3>Blackwell B200 Integration</h3>
+                <p>The core engine for Sovereign Aerospace workloads. Optimized for the massive scale of physics-ML models.</p>
+                <table class="tech-table">
+                    <tr><td>Compute Power</td><td>20 Petaflops (FP4)</td></tr>
+                    <tr><td>Memory BW</td><td>8 TB/s HBM3e</td></tr>
+                    <tr><td>NVLink Speed</td><td>1.8 TB/s Bi-dir</td></tr>
+                    <tr><td>Deployment</td><td>DGX B200 SuperPOD</td></tr>
+                </table>
+                <div style="margin-top: 30px; padding: 20px; background: black; border-left: 4px solid var(--nv-red);">
+                    <p style="color: var(--nv-red); font-weight: bold; margin-bottom: 5px;">WARNING: HIGH THERMAL LOAD</p>
+                    <p style="font-size: 12px;">Liquid cooling mandatory for B200 1200W TDP configurations in sovereign air-gapped pods.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<section class="slide-container" style="background: black; text-align: center;">
+    <div class="content-area reveal">
+        <h1 style="font-size: 7vw; color: var(--nv-green);">READY FOR INITIALIZATION</h1>
+        <p style="font-size: 24px; color: var(--nv-blue); font-family: 'Rajdhani'; margin-top: 20px;">Sovereign Aerospace: The Frontier of Physics-First AI.</p>
+        <div style="margin-top: 60px;">
+            <p style="color: var(--text-muted);">FOR OFFICIAL USE ONLY // SECURE CHANNEL 04</p>
+            <div style="font-family: monospace; color: var(--nv-green); margin-top: 20px;">
+                > CONTACT COMMAND_CENTER@SOVEREIGN.AERO<br>
+                > SYNC_COMPLETE... END_TRANS_V3
+            </div>
+        </div>
+    </div>
+</section>
 
 <script>
-const obs = new IntersectionObserver((es) => {
-    es.forEach((e) => { if (e.isIntersecting) e.target.classList.add("active"); });
-}, { threshold: 0.1 });
-document.querySelectorAll(".reveal").forEach((el) => obs.observe(el));
+// --- Reveal Observer ---
+const observerOptions = { threshold: 0.1 };
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+            // Specific logic for timeline animation
+            if (entry.target.classList.contains('timeline-container')) {
+                document.getElementById('timelineProgress').style.width = "100%";
+            }
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+// --- Glitch Effect (Text-based) ---
+const glitchChars = "ABCDEFGH12345678@#$%";
+document.querySelectorAll(".glitch").forEach(el => {
+    el.addEventListener("mouseover", () => {
+        let originalText = el.innerText;
+        let iterations = 0;
+        const interval = setInterval(() => {
+            el.innerText = originalText.split("").map((letter, index) => {
+                if(index < iterations) return originalText[index];
+                return glitchChars[Math.floor(Math.random() * 20)];
+            }).join("");
+            if(iterations >= originalText.length) clearInterval(interval);
+            iterations += 1/3;
+        }, 30);
+    });
+});
 </script>
+
 </body>
 </html>
